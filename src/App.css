@@ -1,3 +1,6 @@
+/* Custom CSS for Campfire Music App */
+/* Any custom CSS that can't be handled by Tailwind will go here */
+
 .App {
   text-align: center;
 }
