@@ -37,7 +37,8 @@ export interface UserProfile {
 const artists: Artist[] = [
   { id: 1, name: "Tester Artist", bio: "An indie folk band bringing campfire vibes to the stage." },
   { id: 2, name: "Bluesy Bob", bio: "A blues artist known for soulful guitar solos." },
-  { id: 3, name: "Classical Collective", bio: "A group of musicians making classical music accessible." }
+  { id: 3, name: "Classical Collective", bio: "A group of musicians making classical music accessible." },
+  { id: 4, name: "Hans Larson Trio", bio: "A dynamic jazz trio exploring new musical horizons with innovative compositions and improvisation." }
 ];
 
 const tracks: Track[] = [
@@ -45,12 +46,16 @@ const tracks: Track[] = [
   { id: 2, title: "Midnight Blues",     artistId: 2, artistName: "Bluesy Bob",         genre: "Blues",    url: "/assets/sample.mp3" },
   { id: 3, title: "Sunrise Serenade",   artistId: 1, artistName: "Tester Artist",  genre: "Folk",      url: "/assets/sample.mp3" },
   { id: 4, title: "Symphony of Lights", artistId: 3, artistName: "Classical Collective", genre: "Classical", url: "/assets/sample.mp3" },
-  { id: 5, title: "Electric Night",     artistId: 2, artistName: "Bluesy Bob",         genre: "Rock",     url: "/assets/sample.mp3" }
+  { id: 5, title: "Electric Night",     artistId: 2, artistName: "Bluesy Bob",         genre: "Rock",     url: "/assets/sample.mp3" },
+  { id: 6, title: "Downtown",           artistId: 4, artistName: "Hans Larson Trio",    genre: "Jazz",     url: "/assets/tracks/Downtown.mp3" },
+  { id: 7, title: "Spain",              artistId: 4, artistName: "Hans Larson Trio",    genre: "Jazz",     url: "/assets/tracks/Spain.mp3" },
+  { id: 8, title: "Touch Earth Touch Sky", artistId: 4, artistName: "Hans Larson Trio", genre: "Jazz Fusion", url: "/assets/tracks/Touch Earth Touch Sky.mp3" }
 ];
 
 const communityStories: CommunityStory[] = [
   { author: "Jane D.", message: "Campfire introduced me to amazing indie artists I would have never found!" },
-  { author: "Sam G.",  message: "I love how Campfire shows exactly where my money goes. Transparency is key!" }
+  { author: "Sam G.",  message: "I love how Campfire shows exactly where my money goes. Transparency is key!" },
+  { author: "Mike R.", message: "The Hans Larson Trio's 'Spain' remake blew me away! So glad I found them on Campfire." }
 ];
 
 // Initial user profile
@@ -66,8 +71,8 @@ export function getAllTracks(): Track[] {
 }
 
 export function getFeaturedTracks(): Track[] {
-  // For simplicity, our "featured" tracks will be the first 3 tracks
-  return tracks.slice(0, 3);
+  // Let's make one of the Hans Larson Trio tracks featured, along with two others
+  return [tracks[5], tracks[1], tracks[2]];
 }
 
 export function getArtistById(id: number): Artist | undefined {
@@ -96,7 +101,8 @@ export function getUserRoyaltyReport(): RoyaltyReport {
     totalAmount: 4.30,
     breakdown: [
       ["Tester Artist", 2.50],
-      ["Bluesy Bob", 1.80]
+      ["Bluesy Bob", 1.80],
+      ["Hans Larson Trio", 3.20]
     ]
   };
 }
