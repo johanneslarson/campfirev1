@@ -106,7 +106,7 @@ function Player() {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-dark-lighter border-t border-dark-light py-4 px-4 z-10">
+    <div className="fixed bottom-0 left-0 right-0 bg-dark-lighter border-t border-dark-light py-3 px-4 z-30">
       {/* Audio element (hidden) */}
       <audio ref={audioRef} />
 
@@ -126,15 +126,15 @@ function Player() {
         </div>
 
         {/* Player Controls */}
-        <div className="flex flex-col items-center w-2/4">
-          <div className="flex items-center space-x-6 mb-2">
+        <div className="flex flex-col items-center w-full sm:w-2/4">
+          <div className="flex items-center justify-center space-x-5 sm:space-x-6 mb-1 sm:mb-2">
             <button 
               onClick={playPrev} 
               disabled={!currentTrack} 
-              className="text-accent hover:text-primary transition-colors disabled:opacity-50"
+              className="text-accent hover:text-primary transition-colors disabled:opacity-50 p-1"
               aria-label="Previous track"
             >
-              <FaIcons.FaStepBackward size={18} />
+              <FaIcons.FaStepBackward size={16} />
             </button>
             
             <button
@@ -155,29 +155,36 @@ function Player() {
             <button 
               onClick={playNext} 
               disabled={!currentTrack} 
-              className="text-accent hover:text-primary transition-colors disabled:opacity-50"
+              className="text-accent hover:text-primary transition-colors disabled:opacity-50 p-1"
               aria-label="Next track"
             >
-              <FaIcons.FaStepForward size={18} />
+              <FaIcons.FaStepForward size={16} />
             </button>
           </div>
           
+          {/* Mobile Track Info (Shown only on small screens) */}
+          {currentTrack && (
+            <div className="sm:hidden text-center mb-1 w-full">
+              <p className="text-accent truncate font-medium text-xs">{currentTrack.title}</p>
+            </div>
+          )}
+          
           {/* Progress Bar */}
-          <div className="w-full flex items-center space-x-2 text-xs text-gray-300">
-            <span className="w-10 text-right">{formatTime(progress)}</span>
+          <div className="w-full flex items-center space-x-1 sm:space-x-2 text-xs text-gray-300">
+            <span className="w-7 sm:w-10 text-right text-[10px] sm:text-xs">{formatTime(progress)}</span>
             <input
               type="range"
               min="0"
               max={duration || 0}
               value={progress}
               onChange={handleProgressChange}
-              className="flex-grow h-2 appearance-none bg-gray-600 rounded-full focus:outline-none hover:bg-gray-500"
+              className="flex-grow h-1.5 sm:h-2 appearance-none bg-gray-600 rounded-full focus:outline-none hover:bg-gray-500"
               style={{
                 background: `linear-gradient(to right, #ed5a24 ${(progress / (duration || 1)) * 100}%, #535353 0)`
               }}
               disabled={!currentTrack}
             />
-            <span className="w-10">{formatTime(duration)}</span>
+            <span className="w-7 sm:w-10 text-[10px] sm:text-xs">{formatTime(duration)}</span>
           </div>
         </div>
 

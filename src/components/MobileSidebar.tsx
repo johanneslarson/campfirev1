@@ -20,8 +20,8 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
         />
       )}
 
-      {/* Mobile Header Bar */}
-      <div className="flex justify-between items-center p-4 bg-dark-lighter text-white md:hidden">
+      {/* Mobile Header Bar - Fixed at top */}
+      <div className="fixed top-0 left-0 right-0 flex justify-between items-center p-4 bg-dark-lighter text-white md:hidden z-30">
         {/* Logo/Brand */}
         <div className="flex items-center">
           <img src="/assets/logo.png" alt="Campfire Logo" className="h-8 w-8 mr-2" />
@@ -30,7 +30,7 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
 
         {/* Menu Button */}
         <button 
-          className="text-accent hover:text-primary focus:outline-none transition-colors" 
+          className="text-accent hover:text-primary focus:outline-none transition-colors"
           onClick={toggleMenu}
           aria-label="Toggle navigation menu"
         >
@@ -38,15 +38,18 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
         </button>
       </div>
 
-      {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} w-64 bg-dark-lighter text-white transition-transform duration-300 ease-in-out z-50 pt-16 md:hidden overflow-y-auto`}>
-        <nav className="mt-8">
-          <ul className="space-y-2 px-4">
+      {/* Sidebar - Higher z-index than header */}
+      <div 
+        className={`fixed inset-y-0 left-0 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} w-64 bg-dark-lighter text-white transition-transform duration-300 ease-in-out z-50 md:hidden overflow-y-auto`}
+        style={{ paddingTop: '4rem' }} // Add space for the fixed header
+      >
+        <nav>
+          <ul className="space-y-2 px-4 py-2">
             <li>
               <NavLink 
                 to="/" 
                 className={({ isActive }) =>
-                  `flex items-center py-2 px-4 rounded-lg transition-colors ${
+                  `flex items-center py-3 px-4 rounded-lg transition-colors ${
                     isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-dark-light'
                   }`
                 }
@@ -61,7 +64,7 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
               <NavLink 
                 to="/search" 
                 className={({ isActive }) =>
-                  `flex items-center py-2 px-4 rounded-lg transition-colors ${
+                  `flex items-center py-3 px-4 rounded-lg transition-colors ${
                     isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-dark-light'
                   }`
                 }
@@ -75,7 +78,7 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
               <NavLink 
                 to="/playlist" 
                 className={({ isActive }) =>
-                  `flex items-center py-2 px-4 rounded-lg transition-colors ${
+                  `flex items-center py-3 px-4 rounded-lg transition-colors ${
                     isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-dark-light'
                   }`
                 }
@@ -89,7 +92,7 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
               <NavLink 
                 to="/dashboard" 
                 className={({ isActive }) =>
-                  `flex items-center py-2 px-4 rounded-lg transition-colors ${
+                  `flex items-center py-3 px-4 rounded-lg transition-colors ${
                     isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-dark-light'
                   }`
                 }
@@ -103,7 +106,7 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
               <NavLink 
                 to="/settings" 
                 className={({ isActive }) =>
-                  `flex items-center py-2 px-4 rounded-lg transition-colors ${
+                  `flex items-center py-3 px-4 rounded-lg transition-colors ${
                     isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-dark-light'
                   }`
                 }

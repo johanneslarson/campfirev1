@@ -27,7 +27,7 @@ function App() {
       <MobileSidebar isOpen={isMenuOpen} toggleMenu={toggleMenu} closeMenu={closeMenu} />
       
       {/* Main Content */}
-      <main className="flex-1 pb-28 md:ml-64 w-full">
+      <main className="flex-1 pb-28 md:ml-64 w-full pt-16 md:pt-0">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/artist/:id" element={<ArtistProfile />} />
