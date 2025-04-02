@@ -26,11 +26,16 @@ function Player() {
     if (!audioRef.current || !isAudioInitialized) return;
     
     if (currentTrack) {
+<<<<<<< HEAD
       // Use the URL directly as it should now be a full URL with the hostname
       console.log("Setting audio source:", currentTrack.url);
       
       // Only update the source if it's different from the current one
       if (audioRef.current.src !== currentTrack.url) {
+=======
+      // Only update the source if it's different from the current one
+      if (audioRef.current.src !== new URL(currentTrack.url, window.location.origin).href) {
+>>>>>>> 198efc973558c769bcec5e792afa9651ea50c165
         audioRef.current.src = currentTrack.url;
       }
       
@@ -38,8 +43,12 @@ function Player() {
         const playPromise = audioRef.current.play();
         if (playPromise !== undefined) {
           playPromise.catch(err => {
+<<<<<<< HEAD
             console.error("Audio play prevented:", err);
             console.error("Track URL:", currentTrack.url);
+=======
+            console.warn("Audio play prevented:", err);
+>>>>>>> 198efc973558c769bcec5e792afa9651ea50c165
           });
         }
       }
@@ -135,6 +144,7 @@ function Player() {
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-dark-lighter border-t border-dark-light py-3 px-4 z-30">
       {/* Audio element (hidden) */}
+<<<<<<< HEAD
       <audio 
         ref={audioRef} 
         onError={(e) => {
@@ -145,6 +155,9 @@ function Player() {
           }
         }}
       />
+=======
+      <audio ref={audioRef} />
+>>>>>>> 198efc973558c769bcec5e792afa9651ea50c165
 
       <div className="flex items-center justify-between max-w-screen-xl mx-auto">
         {/* Track Info */}

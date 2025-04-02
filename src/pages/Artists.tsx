@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { PlaybackContext } from "../context/PlaybackContext";
-import { getAllArtists, getTracksByArtist, Artist, Track, getIsInitialized } from "../services/data";
+import { getAllArtists, getTracksByArtist, getAllArtistsSync, getTracksByArtistSync, Artist, Track, getIsInitialized } from "../services/data";
 import { FaIcons } from "../utils/icons";
 
 function Artists() {
@@ -100,10 +100,10 @@ function Artists() {
             <section key={artist.id} className="space-y-4">
               {/* Artist Header */}
               <div className="flex items-center space-x-4">
-                {artist.image_url ? (
+                {artist.imageUrl ? (
                   <div className="w-16 h-16 min-w-[4rem] rounded-full overflow-hidden flex-shrink-0">
                     <img 
-                      src={artist.image_url} 
+                      src={artist.imageUrl} 
                       alt={`${artist.name}`} 
                       className="w-full h-full object-cover"
                       loading="lazy"
