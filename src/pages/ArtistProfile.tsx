@@ -68,9 +68,9 @@ function ArtistProfile() {
     <div className="p-6 max-w-screen-xl mx-auto space-y-8">
       {/* Artist Header */}
       <div className="bg-gradient-to-r from-primaryDark to-primary rounded-spotify p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center gap-6">
-        {/* Artist Avatar */}
+        {/* Artist Avatar - increased size */}
         {artist.image_url ? (
-          <div className="w-32 h-32 rounded-full overflow-hidden">
+          <div className="w-40 h-40 md:w-48 md:h-48 rounded-lg overflow-hidden flex-shrink-0">
             <img 
               src={artist.image_url} 
               alt={`${artist.name}`} 
@@ -78,13 +78,31 @@ function ArtistProfile() {
             />
           </div>
         ) : (
-          <div className="bg-dark-lighter w-32 h-32 rounded-full flex items-center justify-center text-primary">
-            <FaIcons.FaMusic size={40} />
+          <div className="bg-dark-lighter w-40 h-40 md:w-48 md:h-48 rounded-lg flex items-center justify-center text-primary flex-shrink-0">
+            <FaIcons.FaMusic size={48} />
           </div>
         )}
         <div>
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">{artist.name}</h1>
-          <p className="text-accent whitespace-pre-line">{artist.bio}</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">{artist.name}</h1>
+          <p className="text-accent whitespace-pre-line mb-4">{artist.bio}</p>
+          
+          {/* Artist Links */}
+          {artist.links && artist.links.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-3">
+              {artist.links.map((link, index) => (
+                <a 
+                  key={index}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-3 py-1 bg-dark-lighter rounded-full text-sm text-accent hover:bg-dark-light transition-colors"
+                >
+                  {getLinkIcon(link.label)}
+                  <span className="ml-1">{link.label}</span>
+                </a>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -130,6 +148,29 @@ function ArtistProfile() {
       </section>
     </div>
   );
+}
+
+// Helper function to get icon based on link label
+function getLinkIcon(label: string) {
+  switch (label.toLowerCase()) {
+    case 'website':
+      return <FaIcons.FaGlobe size={14} />;
+    case 'bandcamp':
+      return <FaIcons.FaBandcamp size={14} />;
+    case 'spotify':
+      return <FaIcons.FaSpotify size={14} />;
+    case 'apple music':
+      return <FaIcons.FaApple size={14} />;
+    case 'instagram':
+    case 'insta':
+      return <FaIcons.FaInstagram size={14} />;
+    case 'tidal':
+      return <FaIcons.FaMusic size={14} />;
+    case 'deezer':
+      return <FaIcons.FaHeadphones size={14} />;
+    default:
+      return <FaIcons.FaLink size={14} />;
+  }
 }
 
 export default ArtistProfile; 
