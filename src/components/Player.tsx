@@ -201,9 +201,9 @@ function Player() {
               max={duration || 0}
               value={progress}
               onChange={handleProgressChange}
-              className="flex-grow h-1.5 sm:h-2 appearance-none bg-gray-600 rounded-full focus:outline-none hover:bg-gray-500"
+              className="flex-grow h-1.5 sm:h-2 appearance-none bg-gray-600 rounded-full focus:outline-none hover:bg-primaryDark"
               style={{
-                background: `linear-gradient(to right, #ed5a24 ${(progress / (duration || 1)) * 100}%, #535353 0)`
+                background: `linear-gradient(to right, #ed7d24 ${(progress / (duration || 1)) * 100}%, #535353 0)`
               }}
               disabled={!currentTrack}
             />
@@ -227,9 +227,9 @@ function Player() {
             step="0.01"
             value={isMuted ? 0 : volume}
             onChange={handleVolumeChange}
-            className="w-24 h-2 appearance-none bg-gray-600 rounded-full focus:outline-none hover:bg-gray-500"
+            className="w-24 h-2 appearance-none bg-gray-600 rounded-full focus:outline-none hover:bg-primaryDark"
             style={{
-              background: `linear-gradient(to right, #ed5a24 ${(isMuted ? 0 : volume) * 100}%, #535353 0)`
+              background: `linear-gradient(to right, #ed7d24 ${(isMuted ? 0 : volume) * 100}%, #535353 0)`
             }}
           />
         </div>

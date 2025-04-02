@@ -16,7 +16,7 @@ function Sidebar() {
               to="/" 
               className={({ isActive }) =>
                 `flex items-center py-2 px-4 rounded-lg transition-colors ${
-                  isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-dark-light hover:text-white'
+                  isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
                 }`
               }
               end
@@ -30,7 +30,7 @@ function Sidebar() {
               to="/artists" 
               className={({ isActive }) =>
                 `flex items-center py-2 px-4 rounded-lg transition-colors ${
-                  isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-dark-light hover:text-white'
+                  isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
                 }`
               }
             >
@@ -43,7 +43,7 @@ function Sidebar() {
               to="/search" 
               className={({ isActive }) =>
                 `flex items-center py-2 px-4 rounded-lg transition-colors ${
-                  isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-dark-light hover:text-white'
+                  isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
                 }`
               }
             >
@@ -56,7 +56,7 @@ function Sidebar() {
               to="/playlist" 
               className={({ isActive }) =>
                 `flex items-center py-2 px-4 rounded-lg transition-colors ${
-                  isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-dark-light hover:text-white'
+                  isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
                 }`
               }
             >
@@ -69,7 +69,7 @@ function Sidebar() {
               to="/dashboard" 
               className={({ isActive }) =>
                 `flex items-center py-2 px-4 rounded-lg transition-colors ${
-                  isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-dark-light hover:text-white'
+                  isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
                 }`
               }
             >
@@ -82,7 +82,7 @@ function Sidebar() {
               to="/settings" 
               className={({ isActive }) =>
                 `flex items-center py-2 px-4 rounded-lg transition-colors ${
-                  isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-dark-light hover:text-white'
+                  isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
                 }`
               }
             >

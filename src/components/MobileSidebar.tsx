@@ -50,7 +50,7 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
                 to="/" 
                 className={({ isActive }) =>
                   `flex items-center py-3 px-4 rounded-lg transition-colors ${
-                    isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-dark-light'
+                    isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
                   }`
                 }
                 end
@@ -65,7 +65,7 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
                 to="/artists" 
                 className={({ isActive }) =>
                   `flex items-center py-3 px-4 rounded-lg transition-colors ${
-                    isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-dark-light'
+                    isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
                   }`
                 }
                 onClick={closeMenu}
@@ -79,7 +79,7 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
                 to="/search" 
                 className={({ isActive }) =>
                   `flex items-center py-3 px-4 rounded-lg transition-colors ${
-                    isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-dark-light'
+                    isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
                   }`
                 }
                 onClick={closeMenu}

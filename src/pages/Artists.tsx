@@ -53,7 +53,7 @@ function Artists() {
   if (loading) {
     return (
       <div className="p-6 flex justify-center items-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primaryLight"></div>
       </div>
     );
   }
@@ -72,11 +72,11 @@ function Artists() {
             <section key={artist.id} className="space-y-4">
               {/* Artist Header */}
               <div className="flex items-center space-x-4">
-                <div className="bg-dark-lighter w-16 h-16 rounded-full flex items-center justify-center text-primary">
+                <div className="bg-dark-lighter w-16 h-16 rounded-full flex items-center justify-center text-primaryLight">
                   <FaIcons.FaMusic size={24} />
                 </div>
                 <div>
-                  <Link to={`/artist/${artist.id}`} className="text-2xl font-bold text-accent hover:text-primary transition-colors">
+                  <Link to={`/artist/${artist.id}`} className="text-2xl font-bold text-accent hover:text-primaryLight transition-colors">
                     {artist.name}
                   </Link>
                   <p className="text-gray-400 text-sm">{artist.bio}</p>
@@ -103,7 +103,7 @@ function Artists() {
                         </div>
                         <button 
                           onClick={() => handlePlayTrack(track)} 
-                          className="p-2 text-primary hover:text-primaryDark transition-colors"
+                          className="p-2 text-primaryLight hover:text-primaryDark transition-colors"
                           aria-label={`Play ${track.title}`}
                         >
                           <FaIcons.FaPlay />

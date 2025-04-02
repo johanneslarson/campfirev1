@@ -51,19 +51,19 @@ function App() {
         {isLoading ? (
           <div className="flex min-h-screen items-center justify-center">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary mx-auto mb-4"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primaryLight mx-auto mb-4"></div>
               <p className="text-lg">Loading Campfire...</p>
             </div>
           </div>
         ) : error ? (
           <div className="flex min-h-screen items-center justify-center">
             <div className="text-center p-6 max-w-md">
-              <div className="text-primary text-5xl mb-4">⚠️</div>
+              <div className="text-primaryLight text-5xl mb-4">⚠️</div>
               <h1 className="text-2xl font-bold mb-4">Something went wrong</h1>
               <p className="mb-6">{error}</p>
               <button 
                 onClick={() => window.location.reload()} 
-                className="bg-primary hover:bg-primaryDark text-white px-4 py-2 rounded transition-colors"
+                className="bg-primaryLight hover:bg-primaryDark text-white px-4 py-2 rounded transition-colors"
               >
                 Try Again
               </button>

@@ -78,11 +78,11 @@ function RoyaltiesDashboard() {
 
 // Helper function to get a color class based on index
 function getColorClass(index: number): string {
-  // Using custom tailwind classes for the specific colors requested
+  // Using Tailwind classes from our theme
   const colors = [
     'bg-primary',
-    'bg-[#af3f16]', // Dark orange/rust
-    'bg-[#ed7d24]', // Bright orange
+    'bg-primaryDark',
+    'bg-primaryLight',
     'bg-yellow-500',
     'bg-purple-500',
     'bg-pink-500'

@@ -51,7 +51,7 @@ function Home() {
   return (
     <div className="p-4 sm:p-6 max-w-screen-xl mx-auto space-y-6 sm:space-y-8">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-primaryDark to-primary rounded-spotify p-4 sm:p-8 text-white">
+      <div className="bg-gradient-to-r from-primaryDark to-primaryLight rounded-spotify p-4 sm:p-8 text-white">
         <h1 className="text-2xl sm:text-4xl font-bold mb-2">Welcome to Campfire</h1>
         <p className="text-lg sm:text-xl opacity-90">
           Ethical music streaming for artists and listeners
@@ -63,7 +63,7 @@ function Home() {
         <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-accent">Featured Tracks</h2>
         {featuredTracks.length === 0 ? (
           <div className="bg-dark-lighter rounded-spotify p-8 text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mx-auto mb-4"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primaryLight mx-auto mb-4"></div>
             <p className="text-gray-400">Loading featured tracks...</p>
           </div>
         ) : (
@@ -83,7 +83,7 @@ function Home() {
                     </div>
                     <button 
                       onClick={() => handlePlayTrack(track)}
-                      className="bg-primary hover:bg-primaryDark text-white p-3 rounded-full transition-all flex-shrink-0 transform hover:scale-105"
+                      className="bg-primaryLight hover:bg-primaryDark text-white p-3 rounded-full transition-all flex-shrink-0 transform hover:scale-105"
                       aria-label={`Play ${track.title}`}
                     >
                       <FaIcons.FaPlay size={14} />
@@ -94,7 +94,7 @@ function Home() {
                   className="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer flex items-center justify-center"
                   onClick={() => handlePlayTrack(track)}
                 >
-                  <div className="bg-primary p-4 rounded-full">
+                  <div className="bg-primaryLight hover:bg-primaryDark p-4 rounded-full">
                     <FaIcons.FaPlay className="text-white" size={24} />
                   </div>
                 </div>
@@ -110,7 +110,7 @@ function Home() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {stats.map(stat => (
             <div key={stat.label} className="bg-dark-lighter p-4 sm:p-6 rounded-spotify text-center">
-              <p className="text-3xl sm:text-5xl font-bold text-primary mb-1 sm:mb-2">{stat.value}</p>
+              <p className="text-3xl sm:text-5xl font-bold text-primaryLight mb-1 sm:mb-2">{stat.value}</p>
               <p className="text-sm text-gray-300">{stat.label}</p>
             </div>
           ))}
@@ -122,7 +122,7 @@ function Home() {
         <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-accent">Community Stories</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           {stories.map(story => (
-            <blockquote key={story.author} className="bg-dark-lighter p-4 sm:p-6 rounded-spotify relative border-l-4 border-primary">
+            <blockquote key={story.author} className="bg-dark-lighter p-4 sm:p-6 rounded-spotify relative border-l-4 border-primaryLight">
               <p className="italic text-accent mb-3 sm:mb-4">{story.message}</p>
               <footer className="text-sm text-gray-300">— {story.author}</footer>
             </blockquote>
