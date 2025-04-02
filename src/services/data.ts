@@ -373,7 +373,7 @@ export async function initializeData(): Promise<void> {
         id: "3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f",
         name: "SYM1",
         bio: "Unsubscribed from reality as we know it, SYM1, (pronounced sim-ONE or si-MOAN) is a vocalist, producer, and performer using eurodance and alternative aesthetics to inspire a renaissance of early 2000s rave culture. Additionally, she is a independent label owner and strong advocate for arts and musicians rights.",
-        image_url: "/assets/artists/SYM1.png",
+        imageUrl: "/assets/artists/SYM1.png",
         links: [
           { label: "Website", url: "https://www.no1butsym1.com/" },
           { label: "Bandcamp", url: "https://no1butsym1.bandcamp.com/" },
