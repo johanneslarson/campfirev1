@@ -73,15 +73,16 @@ function Artists() {
               {/* Artist Header */}
               <div className="flex items-center space-x-4">
                 {artist.image_url ? (
-                  <div className="w-16 h-16 rounded-full overflow-hidden">
+                  <div className="w-16 h-16 min-w-[4rem] rounded-full overflow-hidden flex-shrink-0">
                     <img 
                       src={artist.image_url} 
                       alt={`${artist.name}`} 
                       className="w-full h-full object-cover"
+                      loading="lazy"
                     />
                   </div>
                 ) : (
-                  <div className="bg-dark-lighter w-16 h-16 rounded-full flex items-center justify-center text-primaryLight">
+                  <div className="bg-dark-lighter w-16 h-16 min-w-[4rem] rounded-full flex items-center justify-center text-primaryLight flex-shrink-0">
                     <FaIcons.FaMusic size={24} />
                   </div>
                 )}

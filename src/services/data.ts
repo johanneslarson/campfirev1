@@ -350,11 +350,12 @@ export async function initializeData(): Promise<void> {
         {
           id: "2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e",
           name: "Patrick Amunson",
-          bio: "Patrick Jae Amunson is a versatile musician and producer with a diverse background in rock, electronic, and classical-inspired music. As the drummer, lead vocalist, and producer for Counter Culture—known for tracks like Fuck Politics—and a key member of the alt-rock band Eleven11, Patrick has honed his craft in both live performance and studio production.\n\nBeyond rock, he explores electronic music under his DJ alias Fireye, producing high-energy EDM and experimental beats. Simultaneously, under his own name, he delivers unique \"classical\" reimaginings of modern songs on piano. In addition to his personal projects, Patrick has produced and published numerous artists, all of which can be found at Amunson Audio. His ability to bridge multiple genres and push creative boundaries makes him a dynamic force in the music industry.",
+          bio: "Patrick Jae Amunson is a versatile musician and producer with a diverse background in rock, electronic, and classical-inspired music. As the drummer, lead vocalist, and producer for Counter Culture—known for tracks like Fuck Politics—and a key member of the alt-rock band Eleven11, Patrick has honed his craft in both live performance and studio production. Beyond rock, he explores electronic music under his DJ alias Fireye, producing high-energy EDM and experimental beats. Under his own name, he delivers unique \"classical\" reimaginings of modern songs on piano.",
           image_url: "/assets/artists/Patrick Amunson.jpeg",
           links: [
             { label: "Website", url: "https://www.amunsonaudio.com/patrick-amunson" },
-            { label: "Tidal", url: "https://tidal.com/browse/credits/16117098" }
+            { label: "Tidal", url: "https://tidal.com/browse/credits/16117098" },
+            { label: "LinkedIn", url: "https://www.linkedin.com/in/patrickamunson/" }
           ]
         },
         {
@@ -485,11 +486,12 @@ export async function initializeData(): Promise<void> {
       {
         id: "2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e",
         name: "Patrick Amunson",
-        bio: "Patrick Jae Amunson is a versatile musician and producer with a diverse background in rock, electronic, and classical-inspired music. As the drummer, lead vocalist, and producer for Counter Culture—known for tracks like Fuck Politics—and a key member of the alt-rock band Eleven11, Patrick has honed his craft in both live performance and studio production.\n\nBeyond rock, he explores electronic music under his DJ alias Fireye, producing high-energy EDM and experimental beats. Simultaneously, under his own name, he delivers unique \"classical\" reimaginings of modern songs on piano. In addition to his personal projects, Patrick has produced and published numerous artists, all of which can be found at Amunson Audio. His ability to bridge multiple genres and push creative boundaries makes him a dynamic force in the music industry.",
+        bio: "Patrick Jae Amunson is a versatile musician and producer with a diverse background in rock, electronic, and classical-inspired music. As the drummer, lead vocalist, and producer for Counter Culture—known for tracks like Fuck Politics—and a key member of the alt-rock band Eleven11, Patrick has honed his craft in both live performance and studio production. Beyond rock, he explores electronic music under his DJ alias Fireye, producing high-energy EDM and experimental beats. Under his own name, he delivers unique \"classical\" reimaginings of modern songs on piano.",
         image_url: "/assets/artists/Patrick Amunson.jpeg",
         links: [
           { label: "Website", url: "https://www.amunsonaudio.com/patrick-amunson" },
-          { label: "Tidal", url: "https://tidal.com/browse/credits/16117098" }
+          { label: "Tidal", url: "https://tidal.com/browse/credits/16117098" },
+          { label: "LinkedIn", url: "https://www.linkedin.com/in/patrickamunson/" }
         ]
       },
       {

@@ -164,6 +164,8 @@ function getLinkIcon(label: string) {
     case 'instagram':
     case 'insta':
       return <FaIcons.FaInstagram size={14} />;
+    case 'linkedin':
+      return <FaIcons.FaLinkedin size={14} />;
     case 'tidal':
       return <FaIcons.FaMusic size={14} />;
     case 'deezer':
