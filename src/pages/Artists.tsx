@@ -72,14 +72,28 @@ function Artists() {
             <section key={artist.id} className="space-y-4">
               {/* Artist Header */}
               <div className="flex items-center space-x-4">
-                <div className="bg-dark-lighter w-16 h-16 rounded-full flex items-center justify-center text-primaryLight">
-                  <FaIcons.FaMusic size={24} />
-                </div>
+                {artist.image_url ? (
+                  <div className="w-16 h-16 rounded-full overflow-hidden">
+                    <img 
+                      src={artist.image_url} 
+                      alt={`${artist.name}`} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="bg-dark-lighter w-16 h-16 rounded-full flex items-center justify-center text-primaryLight">
+                    <FaIcons.FaMusic size={24} />
+                  </div>
+                )}
                 <div>
                   <Link to={`/artist/${artist.id}`} className="text-2xl font-bold text-accent hover:text-primaryLight transition-colors">
                     {artist.name}
                   </Link>
-                  <p className="text-gray-400 text-sm">{artist.bio}</p>
+                  <p className="text-gray-400 text-sm">
+                    {artist.bio.length > 150 
+                      ? `${artist.bio.substring(0, 150)}...` 
+                      : artist.bio}
+                  </p>
                 </div>
               </div>
               

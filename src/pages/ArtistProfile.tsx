@@ -68,13 +68,23 @@ function ArtistProfile() {
     <div className="p-6 max-w-screen-xl mx-auto space-y-8">
       {/* Artist Header */}
       <div className="bg-gradient-to-r from-primaryDark to-primary rounded-spotify p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center gap-6">
-        {/* Artist Avatar Placeholder */}
-        <div className="bg-dark-lighter w-32 h-32 rounded-full flex items-center justify-center text-primary">
-          <FaIcons.FaMusic size={40} />
-        </div>
+        {/* Artist Avatar */}
+        {artist.image_url ? (
+          <div className="w-32 h-32 rounded-full overflow-hidden">
+            <img 
+              src={artist.image_url} 
+              alt={`${artist.name}`} 
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ) : (
+          <div className="bg-dark-lighter w-32 h-32 rounded-full flex items-center justify-center text-primary">
+            <FaIcons.FaMusic size={40} />
+          </div>
+        )}
         <div>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">{artist.name}</h1>
-          <p className="text-accent">{artist.bio}</p>
+          <p className="text-accent whitespace-pre-line">{artist.bio}</p>
         </div>
       </div>
 

@@ -5,6 +5,7 @@ export interface Artist {
   id: string;
   name: string;
   bio: string;
+  image_url?: string; // Optional profile image URL
 }
 
 export interface Track {
@@ -336,17 +337,20 @@ export async function initializeData(): Promise<void> {
         {
           id: "1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
           name: "Hans Larson Trio",
-          bio: "A dynamic jazz trio exploring new musical horizons with innovative compositions and improvisation."
+          bio: "A dynamic jazz trio exploring new musical horizons with innovative compositions and improvisation.",
+          image_url: "/assets/artists/HansLarsonTrio.jpg"
         },
         {
           id: "2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e",
           name: "Patrick Amunson",
-          bio: "A versatile musician bringing soulful melodies and rhythmic innovation to contemporary music."
+          bio: "Patrick Jae Amunson is a versatile musician and producer with a diverse background in rock, electronic, and classical-inspired music. As the drummer, lead vocalist, and producer for Counter Culture—known for tracks like Fuck Politics—and a key member of the alt-rock band Eleven11, Patrick has honed his craft in both live performance and studio production.\n\nBeyond rock, he explores electronic music under his DJ alias Fireye, producing high-energy EDM and experimental beats. Simultaneously, under his own name, he delivers unique \"classical\" reimaginings of modern songs on piano. In addition to his personal projects, Patrick has produced and published numerous artists, all of which can be found at Amunson Audio. His ability to bridge multiple genres and push creative boundaries makes him a dynamic force in the music industry.",
+          image_url: "/assets/artists/Patrick Amunson.jpeg"
         },
         {
           id: "3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f",
           name: "SYM1",
-          bio: "An electronic music producer crafting immersive soundscapes and cutting-edge beats."
+          bio: "Unsubscribed from reality as we know it, SYM1, (pronounced sim-ONE or si-MOAN) is a vocalist, producer, and performer using eurodance and alternative aesthetics to inspire a renaissance of early 2000s rave culture. Additionally, she is a independent label owner and strong advocate for arts and musicians rights.",
+          image_url: "/assets/artists/SYM1.png"
         }
       ];
     }
@@ -456,17 +460,20 @@ export async function initializeData(): Promise<void> {
       {
         id: "1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
         name: "Hans Larson Trio",
-        bio: "A dynamic jazz trio exploring new musical horizons with innovative compositions and improvisation."
+        bio: "A dynamic jazz trio exploring new musical horizons with innovative compositions and improvisation.",
+        image_url: "/assets/artists/HansLarsonTrio.jpg"
       },
       {
         id: "2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e",
         name: "Patrick Amunson",
-        bio: "A versatile musician bringing soulful melodies and rhythmic innovation to contemporary music."
+        bio: "Patrick Jae Amunson is a versatile musician and producer with a diverse background in rock, electronic, and classical-inspired music. As the drummer, lead vocalist, and producer for Counter Culture—known for tracks like Fuck Politics—and a key member of the alt-rock band Eleven11, Patrick has honed his craft in both live performance and studio production.\n\nBeyond rock, he explores electronic music under his DJ alias Fireye, producing high-energy EDM and experimental beats. Simultaneously, under his own name, he delivers unique \"classical\" reimaginings of modern songs on piano. In addition to his personal projects, Patrick has produced and published numerous artists, all of which can be found at Amunson Audio. His ability to bridge multiple genres and push creative boundaries makes him a dynamic force in the music industry.",
+        image_url: "/assets/artists/Patrick Amunson.jpeg"
       },
       {
         id: "3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f",
         name: "SYM1",
-        bio: "An electronic music producer crafting immersive soundscapes and cutting-edge beats."
+        bio: "Unsubscribed from reality as we know it, SYM1, (pronounced sim-ONE or si-MOAN) is a vocalist, producer, and performer using eurodance and alternative aesthetics to inspire a renaissance of early 2000s rave culture. Additionally, she is a independent label owner and strong advocate for arts and musicians rights.",
+        image_url: "/assets/artists/SYM1.png"
       }
     ];
     
