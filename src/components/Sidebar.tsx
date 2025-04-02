@@ -5,8 +5,8 @@ function Sidebar() {
   return (
     <aside className="w-64 bg-dark-lighter min-h-screen p-4">
       <div className="mb-8 flex items-center">
-        <img src="/assets/logo.png" alt="Campfire Logo" className="h-10 w-10 mr-3" />
-        <span className="text-xl font-bold text-white">Campfire</span>
+        <img src="/assets/logo.png" alt="Campfire Logo" className="h-11 w-11 mr-3" />
+        <span className="text-3xl font-bold text-accent">Campfire</span>
       </div>
       
       <nav aria-label="Main Navigation">

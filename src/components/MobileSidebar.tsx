@@ -24,8 +24,8 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
       <div className="fixed top-0 left-0 right-0 flex justify-between items-center p-4 bg-dark-lighter text-white md:hidden z-30">
         {/* Logo/Brand */}
         <div className="flex items-center">
-          <img src="/assets/logo.png" alt="Campfire Logo" className="h-8 w-8 mr-2" />
-          <span className="text-xl font-bold">Campfire</span>
+          <img src="/assets/logo.png" alt="Campfire Logo" className="h-9 w-9 mr-2" />
+          <span className="text-2xl font-bold text-accent">Campfire</span>
         </div>
 
         {/* Menu Button */}
