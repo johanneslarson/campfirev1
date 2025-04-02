@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { getAllTracks } from "../services/data";
-import { Track } from "../services/data";
+import { getAllTracksSync, Track } from "../services/data";
 
 function PlaylistBuilder() {
-  const allTracks = getAllTracks();
+  const allTracks = getAllTracksSync();
   const [playlist, setPlaylist] = useState<Track[]>([]);
 
   const handleAdd = (track: Track) => {
@@ -13,7 +12,7 @@ function PlaylistBuilder() {
     }
   };
 
-  const handleRemove = (trackId: number) => {
+  const handleRemove = (trackId: string) => {
     setPlaylist(playlist.filter(t => t.id !== trackId));
   };
 
@@ -25,9 +24,9 @@ function PlaylistBuilder() {
         <div className="md:w-1/2 mb-6 md:mb-0">
           <h3 className="text-xl font-semibold mb-2">All Tracks</h3>
           <ul className="max-h-64 overflow-y-auto border p-2">
-            {allTracks.map(track => (
+            {allTracks.map((track: Track) => (
               <li key={track.id} className="flex justify-between items-center py-1">
-                <span>{track.title} – {track.artistName}</span>
+                <span>{track.title} – {track.artist_name}</span>
                 <button 
                   onClick={() => handleAdd(track)} 
                   className="text-primary hover:underline"
@@ -43,9 +42,9 @@ function PlaylistBuilder() {
         <div className="md:w-1/2">
           <h3 className="text-xl font-semibold mb-2">Your Playlist</h3>
           <ul className="max-h-64 overflow-y-auto border p-2">
-            {playlist.map(track => (
+            {playlist.map((track: Track) => (
               <li key={track.id} className="flex justify-between items-center py-1">
-                <span>{track.title} – {track.artistName}</span>
+                <span>{track.title} – {track.artist_name}</span>
                 <button 
                   onClick={() => handleRemove(track.id)} 
                   className="text-primary hover:underline"

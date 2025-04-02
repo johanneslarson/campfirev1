@@ -62,6 +62,20 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
             </li>
             <li>
               <NavLink 
+                to="/artists" 
+                className={({ isActive }) =>
+                  `flex items-center py-3 px-4 rounded-lg transition-colors ${
+                    isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-dark-light'
+                  }`
+                }
+                onClick={closeMenu}
+              >
+                <FaIcons.FaUserFriends className="mr-3" size={18} />
+                <span>Artists</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink 
                 to="/search" 
                 className={({ isActive }) =>
                   `flex items-center py-3 px-4 rounded-lg transition-colors ${

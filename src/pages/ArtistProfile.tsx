@@ -1,20 +1,68 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { PlaybackContext } from "../context/PlaybackContext";
-import { getArtistById, getTracksByArtist } from "../services/data";
+import { getArtistById, getTracksByArtist, getArtistByIdSync, getTracksByArtistSync } from "../services/data";
 import { FaIcons } from "../utils/icons";
+import { Artist, Track } from "../services/data";
 
 function ArtistProfile() {
-  const { id } = useParams(); 
-  const artistId = id ? parseInt(id, 10) : NaN;
-  const artist = getArtistById(artistId);
+  const { id } = useParams<{ id: string }>();
   const { playTrack } = useContext(PlaybackContext);
-
-  if (!artist) {
-    return <div className="p-8 text-center text-accent">Artist not found.</div>;
+  
+  const [artist, setArtist] = useState<Artist | undefined>(id ? getArtistByIdSync(id) : undefined);
+  const [tracks, setTracks] = useState<Track[]>(id ? getTracksByArtistSync(id) : []);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  
+  useEffect(() => {
+    const loadData = async () => {
+      if (!id) {
+        setError("Artist ID is missing");
+        setLoading(false);
+        return;
+      }
+      
+      try {
+        const artistData = await getArtistById(id);
+        if (!artistData) {
+          setError("Artist not found");
+          setLoading(false);
+          return;
+        }
+        
+        setArtist(artistData);
+        const trackData = await getTracksByArtist(id);
+        setTracks(trackData);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error loading artist data:", err);
+        setError("Failed to load artist data");
+        setLoading(false);
+      }
+    };
+    
+    loadData();
+  }, [id]);
+  
+  const handlePlayTrack = (track: Track) => {
+    console.log("ArtistProfile page: Playing track:", track);
+    // Force a small delay to ensure context is ready
+    setTimeout(() => {
+      playTrack(track);
+    }, 0);
+  };
+  
+  if (loading) {
+    return (
+      <div className="p-6 flex justify-center items-center">
+        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
   }
-
-  const tracks = getTracksByArtist(artist.id);
+  
+  if (error || !artist) {
+    return <div className="p-8 text-center text-accent">{error || "Artist not found"}</div>;
+  }
 
   return (
     <div className="p-6 max-w-screen-xl mx-auto space-y-8">
@@ -54,8 +102,8 @@ function ArtistProfile() {
                     </div>
                   </div>
                   <button 
-                    onClick={() => playTrack(track)} 
-                    className="p-2 text-primary hover:text-primary-dark transition-colors"
+                    onClick={() => handlePlayTrack(track)} 
+                    className="p-2 text-primary hover:text-primaryDark transition-colors"
                     aria-label={`Play ${track.title}`}
                   >
                     <FaIcons.FaPlay />

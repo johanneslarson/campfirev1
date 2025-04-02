@@ -1,18 +1,18 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { getAllTracks, Track } from "../services/data";
+import { getAllTracksSync, Track } from "../services/data";
 import { PlaybackContext } from "../context/PlaybackContext";
 import { FaIcons } from "../utils/icons";
 
 function Search() {
   const [query, setQuery] = useState("");
   const { playTrack } = useContext(PlaybackContext);
-  const allTracks = getAllTracks();
+  const allTracks = getAllTracksSync();
   
   const filteredTracks = query 
-    ? allTracks.filter(track => 
+    ? allTracks.filter((track: Track) => 
         track.title.toLowerCase().includes(query.toLowerCase()) ||
-        track.artistName.toLowerCase().includes(query.toLowerCase()) ||
+        track.artist_name.toLowerCase().includes(query.toLowerCase()) ||
         track.genre.toLowerCase().includes(query.toLowerCase())
       )
     : [];
@@ -41,7 +41,7 @@ function Search() {
           {filteredTracks.length > 0 ? (
             <div className="bg-dark-lighter rounded-spotify overflow-hidden">
               <ul>
-                {filteredTracks.map((track, index) => (
+                {filteredTracks.map((track: Track, index: number) => (
                   <li 
                     key={track.id}
                     className={`flex items-center justify-between p-4 hover:bg-dark-light transition-colors ${
@@ -52,8 +52,8 @@ function Search() {
                       <div className="ml-4">
                         <p className="font-medium text-accent">{track.title}</p>
                         <p className="text-sm text-gray-300">
-                          <Link to={`/artist/${track.artistId}`} className="hover:underline">
-                            {track.artistName}
+                          <Link to={`/artist/${track.artist_id}`} className="hover:underline">
+                            {track.artist_name}
                           </Link>
                           <span className="mx-2">•</span>
                           <span>{track.genre}</span>

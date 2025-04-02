@@ -1,44 +1,66 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { PlaybackContext } from "../context/PlaybackContext";
-import { getAllTracks } from "../services/data";
+import { getAllTracksSync } from "../services/data";
 import { FaIcons } from "../utils/icons";
 
 function Player() {
   const { currentTrack, isPlaying, playTrack, pause, resume, playNext, playPrev } = useContext(PlaybackContext);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const allTracks = getAllTracks();
+  const allTracks = getAllTracksSync();
   const [volume, setVolume] = useState(0.8);
   const [isMuted, setIsMuted] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isAudioInitialized, setIsAudioInitialized] = useState(false);
+
+  // Effect to initialize audio element once
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+      setIsAudioInitialized(true);
+    }
+  }, []);
 
   // Effect to load and play the track when currentTrack changes
   useEffect(() => {
-    if (!audioRef.current) return;
+    if (!audioRef.current || !isAudioInitialized) return;
+    
     if (currentTrack) {
-      audioRef.current.src = currentTrack.url;
+      // Only update the source if it's different from the current one
+      if (audioRef.current.src !== new URL(currentTrack.url, window.location.origin).href) {
+        audioRef.current.src = currentTrack.url;
+      }
+      
       if (isPlaying) {
-        audioRef.current.play().catch(err => {
-          // In case autoplay is disallowed by browser, catch the error.
-          console.warn("Audio play prevented:", err);
-        });
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(err => {
+            console.warn("Audio play prevented:", err);
+          });
+        }
       }
     }
-  }, [currentTrack, isPlaying]);
+  }, [currentTrack, isPlaying, isAudioInitialized]);
 
   // Effect to play/pause audio when isPlaying state changes
   useEffect(() => {
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.play().catch(() => {/* handle play issue */});
-    } else {
+    if (!audioRef.current || !isAudioInitialized) return;
+    
+    if (isPlaying && currentTrack) {
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(err => {
+          console.warn("Could not play audio:", err);
+        });
+      }
+    } else if (audioRef.current.paused === false) {
       audioRef.current.pause();
     }
-  }, [isPlaying]);
+  }, [isPlaying, currentTrack, isAudioInitialized]);
 
   // Effect to handle track ending
   useEffect(() => {
-    if (!audioRef.current) return;
+    if (!audioRef.current || !isAudioInitialized) return;
     
     const handleTrackEnd = () => playNext();
     const handleTimeUpdate = () => {
@@ -57,13 +79,14 @@ function Player() {
     audioRef.current.addEventListener('durationchange', handleDurationChange);
     
     return () => {
-      if (audioRef.current) {
-        audioRef.current.removeEventListener('ended', handleTrackEnd);
-        audioRef.current.removeEventListener('timeupdate', handleTimeUpdate);
-        audioRef.current.removeEventListener('durationchange', handleDurationChange);
+      const audio = audioRef.current;
+      if (audio) {
+        audio.removeEventListener('ended', handleTrackEnd);
+        audio.removeEventListener('timeupdate', handleTimeUpdate);
+        audio.removeEventListener('durationchange', handleDurationChange);
       }
     };
-  }, [playNext]);
+  }, [playNext, isAudioInitialized]);
 
   // Format time in minutes:seconds
   const formatTime = (time: number) => {
@@ -117,7 +140,7 @@ function Player() {
             <div className="flex items-center">
               <div className="ml-2 min-w-0">
                 <p className="text-accent truncate font-medium">{currentTrack.title}</p>
-                <p className="text-gray-300 text-sm truncate">{currentTrack.artistName}</p>
+                <p className="text-gray-300 text-sm truncate">{currentTrack.artist_name}</p>
               </div>
             </div>
           ) : (

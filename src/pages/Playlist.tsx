@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { PlaybackContext } from "../context/PlaybackContext";
-import { getAllTracks, Track } from "../services/data";
+import { getAllTracksSync, Track } from "../services/data";
 import { FaIcons } from "../utils/icons";
 
 // Simple playlist interface
@@ -18,7 +18,7 @@ const playlists: Playlist[] = [
     id: 1,
     name: "My Favorites",
     description: "A collection of my favorite tracks",
-    tracks: getAllTracks()
+    tracks: getAllTracksSync()
   }
 ];
 
@@ -70,8 +70,8 @@ function Playlist() {
                     <div className="ml-4">
                       <p className="font-medium text-accent">{track.title}</p>
                       <p className="text-sm text-gray-300">
-                        <Link to={`/artist/${track.artistId}`} className="hover:underline">
-                          {track.artistName}
+                        <Link to={`/artist/${track.artist_id}`} className="hover:underline">
+                          {track.artist_name}
                         </Link>
                       </p>
                     </div>

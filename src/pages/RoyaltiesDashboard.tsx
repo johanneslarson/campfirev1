@@ -11,6 +11,9 @@ function RoyaltiesDashboard() {
     amount,
     percentage: (amount / total) * 100
   }));
+  
+  // Sort by amount in descending order (highest earning first)
+  percentages.sort((a, b) => b.amount - a.amount);
 
   return (
     <div className="p-4 sm:p-6 max-w-screen-xl mx-auto space-y-6 sm:space-y-8">
@@ -75,10 +78,11 @@ function RoyaltiesDashboard() {
 
 // Helper function to get a color class based on index
 function getColorClass(index: number): string {
+  // Using custom tailwind classes for the specific colors requested
   const colors = [
     'bg-primary',
-    'bg-blue-500',
-    'bg-green-500',
+    'bg-[#af3f16]', // Dark orange/rust
+    'bg-[#ed7d24]', // Bright orange
     'bg-yellow-500',
     'bg-purple-500',
     'bg-pink-500'
