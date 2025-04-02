@@ -69,10 +69,10 @@ function ArtistProfile() {
       {/* Artist Header */}
       <div className="bg-gradient-to-r from-primaryDark to-primary rounded-spotify p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center gap-6">
         {/* Artist Avatar - increased size */}
-        {artist.image_url ? (
+        {artist.imageUrl ? (
           <div className="w-40 h-40 md:w-48 md:h-48 rounded-lg overflow-hidden flex-shrink-0">
             <img 
-              src={artist.image_url} 
+              src={artist.imageUrl} 
               alt={`${artist.name}`} 
               className="w-full h-full object-cover"
             />
