@@ -25,11 +25,11 @@ function Artists() {
           return;
         }
 
-        // Get all artists and order them as specified
+        // Get all artists
         const allArtists = await getAllArtists();
         console.log("Artists loaded:", allArtists);
         
-        // Define the order we want: SYM1, Kiyan Saifi, Patrick Amunson, Hans Larson Trio
+        // Define the order we want
         const orderedArtistIds = [
           "118809eb-e984-4d75-8de8-791d25de5b3a", // SYM1
           "5f767b5c-75e2-4246-9687-893be2cb3900", // Kiyan Saifi
@@ -37,14 +37,13 @@ function Artists() {
           "d7d9451b-695f-4a33-a214-1b3839bb2083"  // Hans Larson Trio
         ];
         
-        // Sort artists according to our desired order
-        const orderedArtists: Artist[] = [];
-        for (const id of orderedArtistIds) {
-          const artist = allArtists.find(a => a.id === id);
-          if (artist) {
-            orderedArtists.push(artist);
-          }
-        }
+        // Create a map of artists by ID for quick lookup
+        const artistMap = new Map(allArtists.map(artist => [artist.id, artist]));
+        
+        // Get ordered artists, ensuring no duplicates
+        const orderedArtists = orderedArtistIds
+          .map(id => artistMap.get(id))
+          .filter((artist): artist is Artist => artist !== undefined);
         
         setArtists(orderedArtists);
         
@@ -52,7 +51,12 @@ function Artists() {
         const tracks: Record<string, Track[]> = {};
         for (const artist of orderedArtists) {
           try {
-            tracks[artist.id] = await getTracksByArtist(artist.id);
+            const artistTracks = await getTracksByArtist(artist.id);
+            // Remove any duplicate tracks by ID
+            const uniqueTracks = Array.from(
+              new Map(artistTracks.map(track => [track.id, track])).values()
+            );
+            tracks[artist.id] = uniqueTracks;
           } catch (error) {
             console.error(`Error fetching tracks for artist ${artist.name}:`, error);
             tracks[artist.id] = [];

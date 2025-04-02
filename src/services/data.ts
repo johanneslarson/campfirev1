@@ -147,7 +147,6 @@ export function getFeaturedTracks(): Promise<Track[]> {
       .then((tracks) => {
         // Filter specifically chosen tracks for the featured section
         const featuredTrackIds = [
-          "fbddda3c-86e8-456a-80e2-5ebad1e1f0c2", // Spain by Hans Larson Trio
           "7b3037e3-6d71-46f8-8a6f-90a02fd0669b", // Right 1 4 Me by SYM1
           "d69762e0-536c-4be3-97a9-6505785d675c", // Live at Rhizome by Kiyan Saifi
           "fc25f341-f677-4d2b-b2b0-d5f262e00056"  // The Rush by Patrick Amunson
@@ -157,13 +156,18 @@ export function getFeaturedTracks(): Promise<Track[]> {
           featuredTrackIds.includes(track.id)
         );
         
-        console.log("Featured tracks:", featuredTracks);
+        // Sort tracks in the same order as featuredTrackIds
+        const orderedFeaturedTracks = featuredTrackIds
+          .map(id => featuredTracks.find(track => track.id === id))
+          .filter((track): track is Track => track !== undefined);
         
-        if (featuredTracks.length === 0) {
+        console.log("Featured tracks:", orderedFeaturedTracks);
+        
+        if (orderedFeaturedTracks.length === 0) {
           console.warn("No featured tracks found, check IDs");
         }
         
-        resolve(featuredTracks);
+        resolve(orderedFeaturedTracks);
       })
       .catch(err => {
         console.error("Error getting featured tracks:", err);
@@ -180,12 +184,20 @@ export function getFeaturedTracksSync(): Track[] {
     return [];
   }
   
-  if (allTracks.length <= 3) {
-    return allTracks;
-  }
+  const featuredTrackIds = [
+    "7b3037e3-6d71-46f8-8a6f-90a02fd0669b", // Right 1 4 Me by SYM1
+    "d69762e0-536c-4be3-97a9-6505785d675c", // Live at Rhizome by Kiyan Saifi
+    "fc25f341-f677-4d2b-b2b0-d5f262e00056"  // The Rush by Patrick Amunson
+  ];
   
-  // Pick the first 3 tracks instead of random for sync version
-  return allTracks.slice(0, 3);
+  const featuredTracks = allTracks.filter(track => 
+    featuredTrackIds.includes(track.id)
+  );
+  
+  // Sort tracks in the same order as featuredTrackIds
+  return featuredTrackIds
+    .map(id => featuredTracks.find(track => track.id === id))
+    .filter((track): track is Track => track !== undefined);
 }
 
 // Fetch all artists
@@ -300,34 +312,48 @@ export function getCommunityStories(): CommunityStory[] {
 
 // Get user royalty report
 export function getUserRoyaltyReport(): RoyaltyReport {
-  // Get artists
-  const artists = getAllArtistsSync();
+  // Get all tracks to calculate listening shares
+  const tracks = getAllTracksSync();
   
-  // Create breakdown with customized values
-  const breakdown: [string, number][] = [];
+  // Filter out Hans Larson Trio tracks
+  const royaltyTracks = tracks.filter(track => 
+    track.artist_id !== "d7d9451b-695f-4a33-a214-1b3839bb2083"
+  );
   
-  for (const artist of artists) {
-    let amount: number;
-    
-    if (artist.id === "1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d") {
-      // Hans Larson Trio gets the least
-      amount = 0.75;
-    } else if (artist.id === "3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f") {
-      // SYM1 gets the most
-      amount = 3.50;
-    } else {
-      // Patrick Amunson gets a medium amount
-      amount = 2.25;
+  // Simulate listening time distribution (in minutes)
+  const totalListeningTime = 60; // 1 hour total
+  const artistListeningTime: Record<string, number> = {};
+  
+  // Calculate total listening time per artist
+  royaltyTracks.forEach(track => {
+    if (!artistListeningTime[track.artist_id]) {
+      artistListeningTime[track.artist_id] = 0;
     }
-    
+    // Each track gets equal share of listening time
+    artistListeningTime[track.artist_id] += totalListeningTime / royaltyTracks.length;
+  });
+
+  // Monthly subscription amount (example: $10)
+  const monthlyAmount = 10;
+  
+  // Calculate artist payouts based on their share of listening time
+  const breakdown: [string, number][] = [];
+  const artists = getAllArtistsSync().filter(artist => 
+    artist.id !== "d7d9451b-695f-4a33-a214-1b3839bb2083"
+  );
+  
+  artists.forEach(artist => {
+    const listeningTime = artistListeningTime[artist.id] || 0;
+    // Artist's payout is proportional to their share of total listening time
+    const amount = (listeningTime / totalListeningTime) * monthlyAmount;
     breakdown.push([artist.name, amount]);
-  }
+  });
   
   // Calculate total from breakdown
   const totalAmount = breakdown.reduce((sum, [_, amount]) => sum + amount, 0);
   
   return {
-    totalMinutes: Math.round(totalAmount * 60), // Rough estimate: $1 = 60 minutes
+    totalMinutes: totalListeningTime,
     totalAmount,
     breakdown
   };
@@ -351,26 +377,9 @@ export async function initializeData(): Promise<void> {
     console.log("Starting data initialization");
     
     // Create detailed fallback data for artists with complete bios and images
-    const detailedArtists: Record<string, DetailedArtist> = {
-      "d7d9451b-695f-4a33-a214-1b3839bb2083": {
-        id: "d7d9451b-695f-4a33-a214-1b3839bb2083",
-        name: "Hans Larson Trio",
-        bio: "The Hans Larson Trio is a jazz ensemble known for their innovative compositions and improvisational style. Led by drummer Hans Larson, the group explores the boundaries of traditional jazz while maintaining a strong connection to its roots.",
-        imageUrl: "/assets/artists/Hans Larson Trio.jpeg",
-      },
-      "24c9597b-3c04-4134-b7ef-ccd62dc5b4a0": {
-        id: "24c9597b-3c04-4134-b7ef-ccd62dc5b4a0",
-        name: "Patrick Amunson",
-        bio: "Patrick Jae Amunson is a versatile musician and producer with a diverse background in rock, electronic, and classical-inspired music. As the drummer, songwriter, and producer for several successful indie bands, Patrick has developed a unique style that combines soulful melodies with rhythmic innovation.",
-        imageUrl: "/assets/artists/Patrick Amunson.jpeg",
-        links: [
-          { label: "Website", url: "https://www.amunsonaudio.com/patrick-amunson" },
-          { label: "Tidal", url: "https://tidal.com/browse/credits/16117098" },
-          { label: "LinkedIn", url: "https://www.linkedin.com/in/patrickamunson/" }
-        ]
-      },
-      "3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f": {
-        id: "3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f",
+    const detailedArtists: Artist[] = [
+      {
+        id: "118809eb-e984-4d75-8de8-791d25de5b3a",
         name: "SYM1",
         bio: "Unsubscribed from reality as we know it, SYM1, (pronounced sim-ONE or si-MOAN) is a vocalist, producer, and performer using eurodance and alternative aesthetics to inspire a renaissance of early 2000s rave culture. Additionally, she is a independent label owner and strong advocate for arts and musicians rights.",
         imageUrl: "/assets/artists/SYM1.png",
@@ -382,73 +391,70 @@ export async function initializeData(): Promise<void> {
           { label: "Deezer", url: "https://www.deezer.com/us/artist/5901..." },
           { label: "Instagram", url: "https://www.instagram.com/no1butsym1" }
         ]
+      },
+      {
+        id: "5f767b5c-75e2-4246-9687-893be2cb3900",
+        name: "Kiyan Saifi",
+        bio: "Kiyan Saifi is an experimental guitarist who currently performs with DC-based bands: Red Sunflower, Opposite Tiger, Fateful Encounter, Sense Memory, as well as in a duo with his brother Teymour Saifi.",
+        imageUrl: "/assets/artists/KiyanSaifi.jpg",
+        links: [
+          { label: "Instagram", url: "https://www.instagram.com/kiyansaifi" }
+        ]
+      },
+      {
+        id: "24c9597b-3c04-4134-b7ef-ccd62dc5b4a0",
+        name: "Patrick Amunson",
+        bio: "Patrick Jae Amunson is a versatile musician and producer with a diverse background in rock, electronic, and classical-inspired music. As the drummer, lead vocalist, and producer for Counter Culture—known for tracks like Fuck Politics—and a key member of the alt-rock band Eleven11, Patrick has honed his craft in both live performance and studio production. Beyond rock, he explores electronic music under his DJ alias Fireye, and under his own name, he delivers unique \"classical\" reimaginings of modern songs on piano.",
+        imageUrl: "/assets/artists/Patrick Amunson.jpeg",
+        links: [
+          { label: "Website", url: "https://www.amunsonaudio.com/patrick-amunson" },
+          { label: "Tidal", url: "https://tidal.com/browse/credits/16117098" },
+          { label: "LinkedIn", url: "https://www.linkedin.com/in/patrickamunson/" }
+        ]
+      },
+      {
+        id: "d7d9451b-695f-4a33-a214-1b3839bb2083",
+        name: "Hans Larson Trio",
+        bio: "The Hans Larson Trio is a jazz ensemble known for their innovative compositions and improvisational style. Led by drummer Hans Larson, the group explores the boundaries of traditional jazz while maintaining a strong connection to its roots.",
+        imageUrl: "/assets/artists/Hans Larson Trio.jpeg"
       }
-    };
-    
-    // Add a timeout to the fetch requests
-    const timeoutPromise = new Promise<never>((_, reject) => 
-      setTimeout(() => reject(new Error('Request timed out')), 5000)
-    );
-    
-    // Try to fetch both artists and tracks in parallel
-    await Promise.race([
-      Promise.all([getAllArtists(), getAllTracks()]),
-      timeoutPromise
-    ]);
-    
-    // If we have no data after fetching, use fallback data
-    if (artistsCache.length === 0) {
-      console.log("No artists fetched from API, using fallback artists");
-      
-      // Use our detailed artists as fallback
-      artistsCache = Object.values(detailedArtists);
-    }
-    
-    // Set fallback tracks
-    tracksCache = [
-      // Hans Larson Trio tracks
+    ];
+
+    const fallbackTracks: Track[] = [
+      // SYM1 tracks
       {
-        id: "4d5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f9a",
-        title: "Spain",
-        artist_id: "1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
-        artist_name: "Hans Larson Trio",
-        genre: "Jazz",
-        url: "/assets/tracks/HansLarsonTrio/Spain.mp3",
-        file_type: "mp3"
+        id: "7b3037e3-6d71-46f8-8a6f-90a02fd0669b",
+        title: "Right 1 4 Me",
+        artist_id: "118809eb-e984-4d75-8de8-791d25de5b3a",
+        artist_name: "SYM1",
+        genre: "Hyperpop",
+        url: "/assets/tracks/SYM1/Right 1 4 Me Master 2 [2024-03-06 195528].m4a",
+        file_type: "m4a"
       },
+      // Kiyan Saifi tracks
       {
-        id: "5e6f7a8b-9c0d-1e2f-3a4b-5c6d7e8f9a0b",
-        title: "Downtown",
-        artist_id: "1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
-        artist_name: "Hans Larson Trio",
-        genre: "Jazz",
-        url: "/assets/tracks/HansLarsonTrio/Downtown.mp3",
-        file_type: "mp3"
+        id: "d69762e0-536c-4be3-97a9-6505785d675c",
+        title: "Live at Rhizome",
+        artist_id: "5f767b5c-75e2-4246-9687-893be2cb3900",
+        artist_name: "Kiyan Saifi",
+        genre: "Experimental",
+        url: "/assets/tracks/KiyanSaifi/Live at Rhizome.m4a",
+        file_type: "m4a"
       },
-      {
-        id: "6f7a8b9c-0d1e-2f3a-4b5c-6d7e8f9a0b1c",
-        title: "Touch Earth Touch Sky",
-        artist_id: "1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
-        artist_name: "Hans Larson Trio",
-        genre: "Jazz Fusion",
-        url: "/assets/tracks/HansLarsonTrio/Touch Earth Touch Sky.mp3",
-        file_type: "mp3"
-      },
-      
       // Patrick Amunson tracks
       {
-        id: "7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d",
+        id: "fc25f341-f677-4d2b-b2b0-d5f262e00056",
         title: "The Rush",
-        artist_id: "2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e",
+        artist_id: "24c9597b-3c04-4134-b7ef-ccd62dc5b4a0",
         artist_name: "Patrick Amunson",
-        genre: "Electronic",
+        genre: "Pop",
         url: "/assets/tracks/PatrickAmunson/Patrick Amunson - The Rush.m4a",
         file_type: "m4a"
       },
       {
         id: "8b9c0d1e-2f3a-4b5c-6d7e-8f9a0b1c2d3e",
         title: "Jonny Depp Summer",
-        artist_id: "2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e",
+        artist_id: "24c9597b-3c04-4134-b7ef-ccd62dc5b4a0",
         artist_name: "Patrick Amunson",
         genre: "Pop/Rock",
         url: "/assets/tracks/PatrickAmunson/Patrick Amunson - Jonny Depp Summer.m4a",
@@ -457,7 +463,7 @@ export async function initializeData(): Promise<void> {
       {
         id: "9c0d1e2f-3a4b-5c6d-7e8f-9a0b1c2d3e4f",
         title: "Like You Mean It",
-        artist_id: "2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e",
+        artist_id: "24c9597b-3c04-4134-b7ef-ccd62dc5b4a0",
         artist_name: "Patrick Amunson",
         genre: "Pop/Rock",
         url: "/assets/tracks/PatrickAmunson/Patrick Amunson - Like You Mean It.m4a",
@@ -466,7 +472,7 @@ export async function initializeData(): Promise<void> {
       {
         id: "0d1e2f3a-4b5c-6d7e-8f9a-0b1c2d3e4f5a",
         title: "Peaches & Cream",
-        artist_id: "2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e",
+        artist_id: "24c9597b-3c04-4134-b7ef-ccd62dc5b4a0",
         artist_name: "Patrick Amunson",
         genre: "Pop/Rock",
         url: "/assets/tracks/PatrickAmunson/Patrick Amunson - Peaches & Cream.m4a",
@@ -475,26 +481,53 @@ export async function initializeData(): Promise<void> {
       {
         id: "1e2f3a4b-5c6d-7e8f-9a0b-1c2d3e4f5a6b",
         title: "Escape the City at Night",
-        artist_id: "2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e",
+        artist_id: "24c9597b-3c04-4134-b7ef-ccd62dc5b4a0",
         artist_name: "Patrick Amunson",
         genre: "Electronic",
         url: "/assets/tracks/PatrickAmunson/Fireye - Escape the City at Night.m4a",
         file_type: "m4a"
       },
-      
-      // SYM1 tracks
+      // Hans Larson Trio tracks
       {
-        id: "2f3a4b5c-6d7e-8f9a-0b1c-2d3e4f5a6b7c",
-        title: "Right 1 4 Me",
-        artist_id: "3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f",
-        artist_name: "SYM1",
-        genre: "Hyperpop",
-        url: "/assets/tracks/SYM1/Right 1 4 Me Master 2 [2024-03-06 195528].m4a",
-        file_type: "m4a"
+        id: "fbddda3c-86e8-456a-80e2-5ebad1e1f0c2",
+        title: "Spain",
+        artist_id: "d7d9451b-695f-4a33-a214-1b3839bb2083",
+        artist_name: "Hans Larson Trio",
+        genre: "Jazz",
+        url: "/assets/tracks/HansLarsonTrio/Spain.mp3",
+        file_type: "mp3"
+      },
+      {
+        id: "5e6f7a8b-9c0d-1e2f-3a4b-5c6d7e8f9a0b",
+        title: "Downtown",
+        artist_id: "d7d9451b-695f-4a33-a214-1b3839bb2083",
+        artist_name: "Hans Larson Trio",
+        genre: "Jazz",
+        url: "/assets/tracks/HansLarsonTrio/Downtown.mp3",
+        file_type: "mp3"
+      },
+      {
+        id: "6f7a8b9c-0d1e-2f3a-4b5c-6d7e8f9a0b1c",
+        title: "Touch Earth Touch Sky",
+        artist_id: "d7d9451b-695f-4a33-a214-1b3839bb2083",
+        artist_name: "Hans Larson Trio",
+        genre: "Jazz Fusion",
+        url: "/assets/tracks/HansLarsonTrio/Touch Earth Touch Sky.mp3",
+        file_type: "mp3"
       }
     ];
-  } finally {
-    // Mark initialization as complete
+    
+    // Always use fallback data since the API is not working
+    artistsCache = detailedArtists;
+    tracksCache = fallbackTracks;
+    
+    console.log("Data initialization complete");
+    console.log("Artists loaded:", artistsCache.length);
+    console.log("Tracks loaded:", tracksCache.length);
+    
     isInitialized = true;
+  } catch (error) {
+    console.error("Failed to initialize data:", error);
+    throw error;
   }
 } 

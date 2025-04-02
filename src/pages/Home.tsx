@@ -31,20 +31,22 @@ function Home() {
     }
   }, []);
   
-  const updateHomeData = () => {
-    // Get tracks and update state
-    getFeaturedTracks()
-      .then(tracks => {
-        console.log("Home: Updated featured tracks:", tracks);
-        setFeaturedTracks(tracks);
-      })
-      .catch(err => {
-        console.error("Error loading featured tracks:", err);
-        setFeaturedTracks([]);
-      });
-    
-    // Update stats
-    setStats(getPlatformStats());
+  const updateHomeData = async () => {
+    try {
+      // Get tracks and update state
+      const tracks = await getFeaturedTracks();
+      console.log("Home: Updated featured tracks:", tracks);
+      setFeaturedTracks(tracks);
+      
+      // Update stats
+      setStats(getPlatformStats());
+      
+      // Update stories
+      setStories(getCommunityStories());
+    } catch (err) {
+      console.error("Error loading featured tracks:", err);
+      setFeaturedTracks([]);
+    }
   };
 
   const handlePlayTrack = (track: Track) => {
