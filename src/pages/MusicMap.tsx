@@ -253,8 +253,8 @@ const MusicMap: React.FC = () => {
   }
 
   return (
-    <div className="p-2 pb-4 relative">
-      <h1 className="text-3xl font-bold mb-1 text-primaryLight pt-5 pl-4">Music Map</h1>
+    <div className="p-4 relative">
+      <h1 className="text-3xl font-bold mb-1 text-primaryLight pt-4 pl-4 sm:pt-10">Music Map</h1>
       
       {error && (
         <div className="bg-dark-lighter p-3 rounded-lg mb-2 text-primaryLight mx-4">

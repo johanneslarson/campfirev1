@@ -76,6 +76,20 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
             </li>
             <li>
               <NavLink 
+                to="/map" 
+                className={({ isActive }) =>
+                  `flex items-center py-2 px-4 rounded-lg transition-colors ${
+                    isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
+                  }`
+                }
+                onClick={closeMenu}
+              >
+                <FaIcons.FaMap className="mr-3" size={18} />
+                <span>Music Map</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink 
                 to="/search" 
                 className={({ isActive }) =>
                   `flex items-center py-3 px-4 rounded-lg transition-colors ${
@@ -128,20 +142,6 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
               >
                 <FaIcons.FaCog className="mr-3" size={18} />
                 <span>Settings</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink 
-                to="/map" 
-                className={({ isActive }) =>
-                  `flex items-center py-2 px-4 rounded-lg transition-colors ${
-                    isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
-                  }`
-                }
-                onClick={closeMenu}
-              >
-                <FaIcons.FaMap className="mr-3" size={18} />
-                <span>Music Map</span>
               </NavLink>
             </li>
           </ul>
