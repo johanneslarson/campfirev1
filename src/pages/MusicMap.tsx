@@ -254,7 +254,7 @@ const MusicMap: React.FC = () => {
 
   return (
     <div className="p-4 relative">
-      <h1 className="text-3xl font-bold mb-1 text-primaryLight pt-4 pl-4 sm:pt-10">Music Map</h1>
+      <h1 className="text-3xl font-bold mb-1 text-primaryLight pl-4 sm:pt-6">Music Map</h1>
       
       {error && (
         <div className="bg-dark-lighter p-3 rounded-lg mb-2 text-primaryLight mx-4">
@@ -263,7 +263,7 @@ const MusicMap: React.FC = () => {
         </div>
       )}
       
-      <p className="mb-6 text-gray-300 pl-4">Explore music communities across the United States and discover artists from each region.</p>
+      <p className="mb-4 text-gray-300 pl-4">Explore music communities across the United States and discover artists from each region.</p>
       
       <div className="bg-dark-lighter p-0 rounded-lg overflow-hidden mx-4" style={{ height: 'calc(100vh - 160px)', minHeight: '400px' }}>
         <ComposableMap projection="geoAlbersUsa" className="w-full h-full">
