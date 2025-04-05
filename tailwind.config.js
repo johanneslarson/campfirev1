@@ -29,7 +29,7 @@ module.exports = {
         '128': '32rem',
       },
       borderRadius: {
-        'spotify': '0.5rem',
+        'campfire': '0.5rem',
       },
       gridTemplateColumns: {
         'cards': 'repeat(auto-fill, minmax(200px, 1fr))',

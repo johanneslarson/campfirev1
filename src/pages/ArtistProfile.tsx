@@ -67,7 +67,7 @@ function ArtistProfile() {
   return (
     <div className="p-6 max-w-screen-xl mx-auto space-y-8">
       {/* Artist Header */}
-      <div className="bg-gradient-to-r from-primaryDark to-primary rounded-spotify p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center gap-6">
+      <div className="bg-gradient-to-r from-primaryDark to-primary rounded-campfire p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center gap-6">
         {/* Artist Avatar - increased size */}
         {artist.imageUrl ? (
           <div className="w-40 h-40 md:w-48 md:h-48 rounded-lg overflow-hidden flex-shrink-0">
@@ -113,7 +113,7 @@ function ArtistProfile() {
         </h2>
         
         {tracks.length > 0 ? (
-          <div className="bg-dark-lighter rounded-spotify overflow-hidden">
+          <div className="bg-dark-lighter rounded-campfire overflow-hidden">
             <ul>
               {tracks.map((track, index) => (
                 <li 
@@ -141,7 +141,7 @@ function ArtistProfile() {
             </ul>
           </div>
         ) : (
-          <p className="italic text-gray-300 bg-dark-lighter p-4 rounded-spotify">
+          <p className="italic text-gray-300 bg-dark-lighter p-4 rounded-campfire">
             No tracks available for this artist yet.
           </p>
         )}

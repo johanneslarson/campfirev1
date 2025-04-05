@@ -19,7 +19,7 @@ function RoyaltiesDashboard() {
     <div className="p-4 sm:p-6 max-w-screen-xl mx-auto space-y-6 sm:space-y-8">
       <h1 className="text-2xl sm:text-3xl font-bold text-accent mb-6">Your Royalty Breakdown</h1>
       
-      <div className="bg-dark-lighter rounded-spotify overflow-hidden p-4 sm:p-6">
+      <div className="bg-dark-lighter rounded-campfire overflow-hidden p-4 sm:p-6">
         <div className="mb-6">
           <p className="text-accent mb-1">Total spent this month</p>
           <p className="text-4xl font-bold text-primary">${report.totalAmount.toFixed(2)}</p>
@@ -58,12 +58,12 @@ function RoyaltiesDashboard() {
           <p className="text-accent mb-4">Listening time</p>
           <div className="flex items-center text-gray-300">
             <FaIcons.FaHeadphones className="mr-2" />
-            <p>{report.totalMinutes} minutes this month</p>
+            <p>{Math.round(report.totalMinutes)} minutes this month</p>
           </div>
         </div>
       </div>
       
-      <div className="bg-dark-lighter rounded-spotify p-4 sm:p-6">
+      <div className="bg-dark-lighter rounded-campfire p-4 sm:p-6">
         <h2 className="text-xl font-bold text-accent mb-4">About Royalties at Campfire</h2>
         <p className="text-gray-300 mb-4">
           At Campfire, we believe in fair compensation for artists. When you subscribe, your monthly fee is distributed directly to the artists you listen to, based on your listening time.

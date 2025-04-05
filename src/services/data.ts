@@ -320,23 +320,30 @@ export function getUserRoyaltyReport(): RoyaltyReport {
     track.artist_id !== "d7d9451b-695f-4a33-a214-1b3839bb2083"
   );
   
-  // Simulate listening time distribution (in minutes)
-  const totalListeningTime = 60; // 1 hour total
+  // Monthly subscription amount (reduced from $10)
+  const monthlyAmount = 8.50;
+  
+  // Define artist IDs for reference
+  const sym1Id = "118809eb-e984-4d75-8de8-791d25de5b3a";
+  const patrickId = "24c9597b-3c04-4134-b7ef-ccd62dc5b4a0";
+  const kiyanId = "5f767b5c-75e2-4246-9687-893be2cb3900";
+  
+  // Set custom distribution percentages to ensure SYM1 gets most
+  const distribution: Record<string, number> = {
+    [sym1Id]: 0.45,    // SYM1 gets 45%
+    [patrickId]: 0.40, // Patrick gets 40%
+    [kiyanId]: 0.15    // Kiyan gets 15%
+  };
+  
+  const adjustedTotalListeningTime = 62.57; // Keep the same total minutes
+  
+  // Calculate artist listening time based on distribution
   const artistListeningTime: Record<string, number> = {};
-  
-  // Calculate total listening time per artist
-  royaltyTracks.forEach(track => {
-    if (!artistListeningTime[track.artist_id]) {
-      artistListeningTime[track.artist_id] = 0;
-    }
-    // Each track gets equal share of listening time
-    artistListeningTime[track.artist_id] += totalListeningTime / royaltyTracks.length;
+  Object.keys(distribution).forEach(artistId => {
+    artistListeningTime[artistId] = adjustedTotalListeningTime * distribution[artistId];
   });
-
-  // Monthly subscription amount (example: $10)
-  const monthlyAmount = 10;
   
-  // Calculate artist payouts based on their share of listening time
+  // Calculate artist payouts based on their share
   const breakdown: [string, number][] = [];
   const artists = getAllArtistsSync().filter(artist => 
     artist.id !== "d7d9451b-695f-4a33-a214-1b3839bb2083"
@@ -345,16 +352,16 @@ export function getUserRoyaltyReport(): RoyaltyReport {
   artists.forEach(artist => {
     const listeningTime = artistListeningTime[artist.id] || 0;
     // Artist's payout is proportional to their share of total listening time
-    const amount = (listeningTime / totalListeningTime) * monthlyAmount;
+    const amount = (listeningTime / adjustedTotalListeningTime) * monthlyAmount;
     breakdown.push([artist.name, amount]);
   });
   
-  // Calculate total from breakdown
-  const totalAmount = breakdown.reduce((sum, [_, amount]) => sum + amount, 0);
+  // Sort breakdown by amount (descending)
+  breakdown.sort((a, b) => b[1] - a[1]);
   
   return {
-    totalMinutes: totalListeningTime,
-    totalAmount,
+    totalMinutes: adjustedTotalListeningTime,
+    totalAmount: monthlyAmount,
     breakdown
   };
 }

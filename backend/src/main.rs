@@ -79,6 +79,35 @@ async fn main() -> std::io::Result<()> {
                 )
             )
             
+            // Routes
+            .service(web::scope("/api")
+                .route("/artists", web::get().to(routes::artists::get_all))
+                .route("/artists/{id}", web::get().to(routes::artists::get_by_id))
+                .route("/artists/{id}/tracks", web::get().to(routes::artists::get_tracks))
+                .route("/tracks", web::get().to(routes::tracks::get_all))
+                .route("/tracks/{id}", web::get().to(routes::tracks::get_by_id))
+            )
+            
+            // Special endpoint for Kiyan's track
+            .route("/api/tracks/kiyan_live", web::get().to(|_req: HttpRequest| {
+                let file_path = "/Volumes/cfDrive/Tracks/Kiyan Saifi/Live at Rhizome.m4a";
+                let file = std::fs::File::open(file_path);
+                
+                match file {
+                    Ok(file) => {
+                        let mut buf = Vec::new();
+                        if let Ok(_) = std::io::Read::read_to_end(&mut file, &mut buf) {
+                            HttpResponse::Ok()
+                                .content_type("audio/mp4")
+                                .body(buf)
+                        } else {
+                            HttpResponse::InternalServerError().body("Failed to read file")
+                        }
+                    },
+                    Err(_) => HttpResponse::NotFound().body("Track not found")
+                }
+            }))
+            
             // Serve static files from assets directory
             .service(
                 Files::new("/assets", assets_path.clone())

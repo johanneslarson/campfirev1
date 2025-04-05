@@ -60,7 +60,7 @@ function Home() {
   return (
     <div className="p-4 sm:p-6 max-w-screen-xl mx-auto space-y-6 sm:space-y-8">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-primaryDark to-primaryLight rounded-spotify p-4 sm:p-8 text-white">
+      <div className="bg-gradient-to-r from-primaryDark to-primaryLight rounded-campfire p-4 sm:p-8 text-white">
         <h1 className="text-2xl sm:text-4xl font-bold mb-2">Welcome to Campfire</h1>
         <p className="text-lg sm:text-xl opacity-90">
           Ethical music streaming for artists and listeners
@@ -71,14 +71,14 @@ function Home() {
       <section>
         <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-accent">Featured Tracks</h2>
         {featuredTracks.length === 0 ? (
-          <div className="bg-dark-lighter rounded-spotify p-8 text-center">
+          <div className="bg-dark-lighter rounded-campfire p-8 text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primaryLight mx-auto mb-4"></div>
             <p className="text-gray-400">Loading featured tracks...</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
             {featuredTracks.map(track => (
-              <div key={track.id} className="bg-dark-lighter rounded-spotify overflow-hidden group relative">
+              <div key={track.id} className="bg-dark-lighter rounded-campfire overflow-hidden group relative">
                 <div className="p-4 sm:p-5">
                   <div className="flex justify-between items-start">
                     <div>
@@ -118,7 +118,7 @@ function Home() {
         <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-accent">Platform Stats</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {stats.map(stat => (
-            <div key={stat.label} className="bg-dark-lighter p-4 sm:p-6 rounded-spotify text-center">
+            <div key={stat.label} className="bg-dark-lighter p-4 sm:p-6 rounded-campfire text-center">
               <p className="text-3xl sm:text-5xl font-bold text-primaryLight mb-1 sm:mb-2">{stat.value}</p>
               <p className="text-sm text-gray-300">{stat.label}</p>
             </div>
@@ -131,7 +131,7 @@ function Home() {
         <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-accent">Community Stories</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           {stories.map(story => (
-            <blockquote key={story.author} className="bg-dark-lighter p-4 sm:p-6 rounded-spotify relative border-l-4 border-primaryLight">
+            <blockquote key={story.author} className="bg-dark-lighter p-4 sm:p-6 rounded-campfire relative border-l-4 border-primaryLight">
               <p className="italic text-accent mb-3 sm:mb-4">{story.message}</p>
               <footer className="text-sm text-gray-300">— {story.author}</footer>
             </blockquote>

@@ -30,7 +30,7 @@ function Search() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search for tracks, artists, or genres"
-          className="block w-full pl-10 pr-3 py-3 border border-dark-light rounded-spotify bg-dark-lighter text-accent placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
+          className="block w-full pl-10 pr-3 py-3 border border-dark-light rounded-campfire bg-dark-lighter text-accent placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
         />
       </div>
       
@@ -39,7 +39,7 @@ function Search() {
           <h2 className="text-xl font-semibold text-accent mb-4">Results</h2>
           
           {filteredTracks.length > 0 ? (
-            <div className="bg-dark-lighter rounded-spotify overflow-hidden">
+            <div className="bg-dark-lighter rounded-campfire overflow-hidden">
               <ul>
                 {filteredTracks.map((track: Track, index: number) => (
                   <li 
@@ -72,7 +72,7 @@ function Search() {
               </ul>
             </div>
           ) : (
-            <p className="italic text-gray-300 bg-dark-lighter p-4 rounded-spotify">
+            <p className="italic text-gray-300 bg-dark-lighter p-4 rounded-campfire">
               No results found for "{query}".
             </p>
           )}

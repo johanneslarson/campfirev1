@@ -39,7 +39,7 @@ function Playlist() {
   return (
     <div className="p-6 max-w-screen-xl mx-auto space-y-8">
       {/* Playlist Header */}
-      <div className="bg-gradient-to-r from-primaryDark to-primary rounded-spotify p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center gap-6">
+      <div className="bg-gradient-to-r from-primaryDark to-primary rounded-campfire p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center gap-6">
         {/* Playlist Cover Placeholder */}
         <div className="bg-dark-lighter w-40 h-40 rounded-md flex items-center justify-center text-primary">
           <FaIcons.FaMusic size={40} />
@@ -56,7 +56,7 @@ function Playlist() {
         <h2 className="sr-only">Tracks in playlist</h2>
         
         {playlist.tracks && playlist.tracks.length > 0 ? (
-          <div className="bg-dark-lighter rounded-spotify overflow-hidden">
+          <div className="bg-dark-lighter rounded-campfire overflow-hidden">
             <ul>
               {playlist.tracks.map((track: Track, index: number) => (
                 <li 
@@ -88,7 +88,7 @@ function Playlist() {
             </ul>
           </div>
         ) : (
-          <p className="italic text-gray-300 bg-dark-lighter p-4 rounded-spotify">
+          <p className="italic text-gray-300 bg-dark-lighter p-4 rounded-campfire">
             This playlist is empty.
           </p>
         )}

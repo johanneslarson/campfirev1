@@ -133,7 +133,7 @@ function Artists() {
               </div>
               
               {/* Tracks List */}
-              <div className="bg-dark-lighter rounded-spotify overflow-hidden">
+              <div className="bg-dark-lighter rounded-campfire overflow-hidden">
                 {artistTracks[artist.id]?.length > 0 ? (
                   <ul>
                     {artistTracks[artist.id].map((track, index) => (
