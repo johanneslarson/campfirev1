@@ -1,78 +1,17 @@
-use actix_web::{get, web, HttpResponse, Responder, Error};
+use actix_web::{web, HttpResponse, Responder, Error};
 use actix_files::NamedFile;
 use std::path::PathBuf;
-use crate::models::{AppState, Track};
+use crate::models::AppState;
 use uuid::Uuid;
 use log::{error, info};
 
 /// Get all tracks
-#[get("/tracks")]
 pub async fn get_all_tracks(data: web::Data<AppState>) -> impl Responder {
     let tracks = &data.track_collection.tracks;
     HttpResponse::Ok().json(tracks)
 }
 
-/// Get tracks by artist
-#[get("/artists/{artist_id}/tracks")]
-pub async fn get_tracks_by_artist(
-    data: web::Data<AppState>,
-    path: web::Path<String>,
-) -> impl Responder {
-    let artist_id = path.into_inner();
-    
-    // Parse the UUID
-    let artist_id = match Uuid::parse_str(&artist_id) {
-        Ok(id) => id,
-        Err(_) => {
-            error!("Invalid artist ID format");
-            return HttpResponse::BadRequest().body("Invalid artist ID format");
-        }
-    };
-    
-    let tracks: Vec<&Track> = data.track_collection.tracks
-        .iter()
-        .filter(|track| track.artist_id == artist_id)
-        .collect();
-    
-    HttpResponse::Ok().json(tracks)
-}
-
-/// Get all artists
-#[get("/artists")]
-pub async fn get_all_artists(data: web::Data<AppState>) -> impl Responder {
-    let artists = &data.track_collection.artists;
-    HttpResponse::Ok().json(artists)
-}
-
-/// Get artist by ID
-#[get("/artists/{artist_id}")]
-pub async fn get_artist_by_id(
-    data: web::Data<AppState>,
-    path: web::Path<String>,
-) -> impl Responder {
-    let artist_id = path.into_inner();
-    
-    // Parse the UUID
-    let artist_id = match Uuid::parse_str(&artist_id) {
-        Ok(id) => id,
-        Err(_) => {
-            error!("Invalid artist ID format");
-            return HttpResponse::BadRequest().body("Invalid artist ID format");
-        }
-    };
-    
-    let artist = data.track_collection.artists
-        .iter()
-        .find(|a| a.id == artist_id);
-    
-    match artist {
-        Some(artist) => HttpResponse::Ok().json(artist),
-        None => HttpResponse::NotFound().body("Artist not found"),
-    }
-}
-
 /// Get track by ID
-#[get("/tracks/{track_id}")]
 pub async fn get_track_by_id(
     data: web::Data<AppState>,
     path: web::Path<String>,
@@ -113,11 +52,13 @@ pub async fn serve_track_file(
     Ok(NamedFile::open(filepath)?)
 }
 
-/// Configure routes for the track API
+// Configure routes for the track API - Removed this function as routes are defined in main.rs
+/*
 pub fn configure(cfg: &mut web::ServiceConfig) {
     cfg.service(get_all_tracks)
        .service(get_track_by_id)
-       .service(get_all_artists)
-       .service(get_artist_by_id)
-       .service(get_tracks_by_artist);
-} 
+       .service(get_all_artists) // These were removed
+       .service(get_artist_by_id) // These were removed
+       .service(get_tracks_by_artist); // These were removed
+}
+*/ 

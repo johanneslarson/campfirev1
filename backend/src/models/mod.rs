@@ -8,6 +8,19 @@ pub struct Artist {
     pub bio: String,
 }
 
+// New struct for community data
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Community {
+    pub name: String, 
+    pub artists: Vec<ArtistSummary>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ArtistSummary {
+    pub id: Uuid,
+    pub name: String,
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Track {
     pub id: Uuid,

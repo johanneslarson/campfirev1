@@ -10,6 +10,7 @@ import Search from "./pages/Search";
 import Playlist from "./pages/Playlist";
 import RoyaltiesDashboard from "./pages/RoyaltiesDashboard";
 import Settings from "./pages/Settings";
+import MusicMap from "./pages/MusicMap";
 import { initializeData } from "./services/data";
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/artists" element={<Artists />} />
             <Route path="/artist/:id" element={<ArtistProfile />} />
+            <Route path="/map" element={<MusicMap />} />
             <Route path="/search" element={<Search />} />
             <Route path="/playlist" element={<Playlist />} />
             <Route path="/dashboard" element={<RoyaltiesDashboard />} />

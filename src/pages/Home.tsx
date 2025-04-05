@@ -4,6 +4,10 @@ import { PlaybackContext } from "../context/PlaybackContext";
 import { getFeaturedTracks, getPlatformStats, getCommunityStories, Track, getIsInitialized } from "../services/data";
 import { FaIcons } from "../utils/icons";
 
+// Brand colors for gradients
+// Removed BRAND_COLORS as they are now handled by Tailwind config
+
+// Remove unused type definitions
 function Home() {
   const { playTrack } = useContext(PlaybackContext);
   const [featuredTracks, setFeaturedTracks] = useState<Track[]>([]);
@@ -30,6 +34,8 @@ function Home() {
       return () => clearInterval(checkInterval);
     }
   }, []);
+
+  // Removed the useEffect hook that injected CSS styles (lines 40-72 from original)
   
   const updateHomeData = async () => {
     try {
@@ -59,8 +65,10 @@ function Home() {
 
   return (
     <div className="p-4 sm:p-6 max-w-screen-xl mx-auto space-y-6 sm:space-y-8">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-primaryDark to-primaryLight rounded-campfire p-4 sm:p-8 text-white">
+      {/* Hero Section - reverted to static gradient */}
+      <div className="rounded-campfire p-4 sm:p-8 text-white bg-gradient-to-r from-primaryDark to-primaryLight">
+        {/* Removed the inner div for animation */}
+        {/* Content is now directly inside the main banner div */}
         <h1 className="text-2xl sm:text-4xl font-bold mb-2">Welcome to Campfire</h1>
         <p className="text-lg sm:text-xl opacity-90">
           Ethical music streaming for artists and listeners

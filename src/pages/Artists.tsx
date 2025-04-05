@@ -91,7 +91,7 @@ function Artists() {
   }
 
   return (
-    <div className="p-6 max-w-screen-xl mx-auto space-y-10">
+    <div className="px-6 pt-10 pb-6 max-w-screen-xl mx-auto space-y-8">
       <h1 className="text-3xl font-bold text-accent">Artists</h1>
       
       {artists.length === 0 ? (
@@ -144,8 +144,8 @@ function Artists() {
                         }`}
                       >
                         <div className="flex items-center">
-                          <span className="text-gray-300 w-8 text-right">{index + 1}</span>
-                          <div className="ml-4">
+                          <span className="text-gray-300 w-4 text-center">{index + 1}</span>
+                          <div className="ml-2">
                             <p className="font-medium text-accent">{track.title}</p>
                             <p className="text-sm text-gray-300">{track.genre}</p>
                           </div>

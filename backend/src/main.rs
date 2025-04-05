@@ -1,5 +1,5 @@
 use actix_cors::Cors;
-use actix_web::{middleware, web, App, HttpServer, HttpResponse, http::header};
+use actix_web::{middleware, web, App, HttpServer, HttpResponse, http::header, HttpRequest};
 use actix_files::Files;
 use std::path::PathBuf;
 use log::{info, error};
@@ -50,7 +50,7 @@ async fn main() -> std::io::Result<()> {
     });
     
     // Setup HTTP server
-    info!("Starting HTTP server at http://localhost:8080");
+    info!("Starting HTTP server at http://localhost:8081");
     HttpServer::new(move || {
         // Configure CORS
         let cors = Cors::default()
@@ -69,7 +69,6 @@ async fn main() -> std::io::Result<()> {
             
             // API Routes
             .service(web::scope("/api")
-                .configure(routes::tracks::configure)
                 .service(
                     // Serve audio files via the API
                     web::scope("/assets")
@@ -84,27 +83,17 @@ async fn main() -> std::io::Result<()> {
                 .route("/artists", web::get().to(routes::artists::get_all))
                 .route("/artists/{id}", web::get().to(routes::artists::get_by_id))
                 .route("/artists/{id}/tracks", web::get().to(routes::artists::get_tracks))
-                .route("/tracks", web::get().to(routes::tracks::get_all))
-                .route("/tracks/{id}", web::get().to(routes::tracks::get_by_id))
+                .route("/tracks", web::get().to(routes::tracks::get_all_tracks))
+                .route("/tracks/{id}", web::get().to(routes::tracks::get_track_by_id))
+                .route("/communities", web::get().to(routes::communities::get_communities))
             )
             
             // Special endpoint for Kiyan's track
-            .route("/api/tracks/kiyan_live", web::get().to(|_req: HttpRequest| {
+            .route("/api/tracks/kiyan_live", web::get().to(|_req: HttpRequest| async {
                 let file_path = "/Volumes/cfDrive/Tracks/Kiyan Saifi/Live at Rhizome.m4a";
-                let file = std::fs::File::open(file_path);
-                
-                match file {
-                    Ok(file) => {
-                        let mut buf = Vec::new();
-                        if let Ok(_) = std::io::Read::read_to_end(&mut file, &mut buf) {
-                            HttpResponse::Ok()
-                                .content_type("audio/mp4")
-                                .body(buf)
-                        } else {
-                            HttpResponse::InternalServerError().body("Failed to read file")
-                        }
-                    },
-                    Err(_) => HttpResponse::NotFound().body("Track not found")
+                match tokio::fs::read(file_path).await {
+                    Ok(buf) => HttpResponse::Ok().content_type("audio/mp4").body(buf),
+                    Err(_) => HttpResponse::NotFound().body("Track not found"),
                 }
             }))
             
@@ -122,7 +111,7 @@ async fn main() -> std::io::Result<()> {
                 })
             )
     })
-    .bind(("127.0.0.1", 8080))?
+    .bind(("127.0.0.1", 8081))?
     .run()
     .await
 }

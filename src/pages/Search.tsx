@@ -18,7 +18,7 @@ function Search() {
     : [];
 
   return (
-    <div className="p-6 max-w-screen-xl mx-auto">
+    <div className="px-6 pt-10 pb-6 max-w-screen-xl mx-auto">
       <h1 className="text-3xl font-bold text-accent mb-6">Search</h1>
       
       <div className="relative">

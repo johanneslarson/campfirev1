@@ -26,8 +26,8 @@ interface ArtistDetail {
 
 // Marker coordinates for communities - explicitly typed as [number, number] tuples
 const markers = [
-  { name: "Twin Cities", coordinates: [-93.4650, 45.1778] as [number, number] }, // Minneapolis/St. Paul (moved northwest)
-  { name: "DMV", coordinates: [-77.2369, 39.0072] as [number, number] } // Washington, DC (moved northwest)
+  { name: "Twin Cities", coordinates: [-94.0, 45.5] as [number, number] }, // Moved further NW
+  { name: "DMV", coordinates: [-77.8, 39.3] as [number, number] } // Moved further NW
 ];
 
 const MusicMap: React.FC = () => {
@@ -172,6 +172,75 @@ const MusicMap: React.FC = () => {
     }, 300);
   };
 
+  const MapContent = (
+    <>
+      <Geographies geography={US_MAP_TOPO_URL}>
+        {({ geographies }) => geographies.map(geo => (
+          <Geography
+            key={geo.rsmKey}
+            geography={geo}
+            fill="#131211" // dark brand color
+            stroke="#ed5a24" // primary orange for border lines
+            strokeWidth={0.5}
+            style={{
+              default: {
+                fill: "#131211",
+                stroke: "#ed5a24",
+                strokeWidth: 0.5,
+                outline: "none"
+              },
+              hover: {
+                fill: "#2a2826",
+                stroke: "#ed5a24",
+                strokeWidth: 0.5,
+                outline: "none",
+                cursor: "pointer"
+              },
+              pressed: {
+                fill: "#af3f16",
+                stroke: "#ed5a24",
+                strokeWidth: 0.5,
+                outline: "none"
+              }
+            }}
+          />
+        ))}
+      </Geographies>
+      
+      {markers.map(({ name, coordinates }) => (
+        <Marker key={name} coordinates={coordinates}>
+          <g
+            onClick={(e) => {
+              e.preventDefault();
+              handleRegionClick(name, e);
+            }}
+            className="cursor-pointer focus:outline-none"
+          >
+            <FaIcons.FaMapMarkerAlt color="#f1ead1" size={24} />
+            <foreignObject
+              x="-50"
+              y="-40"
+              width="100"
+              height="30"
+              className="pointer-events-auto"
+            >
+              <div 
+                className="bg-accent text-primaryDark px-3 py-1 rounded-lg text-center text-sm w-full border border-primary cursor-pointer font-semibold outline-none focus:outline-none"
+                onClick={(e) => {
+                  e.stopPropagation(); 
+                  handleRegionClick(name, e);
+                }}
+                style={{ minWidth: '80px' }}
+              >
+                {name}
+              </div>
+            </foreignObject>
+          </g>
+        </Marker>
+      ))}
+    </>
+  );
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -194,77 +263,23 @@ const MusicMap: React.FC = () => {
         </div>
       )}
       
-      <p className="mb-2 text-gray-300 pl-4">Explore music communities across the United States and discover artists from each region.</p>
+      <p className="mb-6 text-gray-300 pl-4">Explore music communities across the United States and discover artists from each region.</p>
       
-      <div className="bg-dark-lighter p-0 rounded-lg mb-4 overflow-hidden mx-4" style={{ height: 'calc(100vh - 160px)', minHeight: '400px' }}>
+      <div className="bg-dark-lighter p-0 rounded-lg overflow-hidden mx-4" style={{ height: 'calc(100vh - 160px)', minHeight: '400px' }}>
         <ComposableMap projection="geoAlbersUsa" className="w-full h-full">
-          <ZoomableGroup 
-            zoom={1} 
-            minZoom={1} 
-            maxZoom={isMobile ? 4 : 1}
-            translateExtent={[[-100, -100], [800, 500]]}
-          >
-            <Geographies geography={US_MAP_TOPO_URL}>
-              {({ geographies }) => geographies.map(geo => (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  fill="#131211" // dark brand color
-                  stroke="#ed5a24" // primary orange for border lines
-                  strokeWidth={0.5}
-                  style={{
-                    default: {
-                      fill: "#131211", // dark brand color
-                      stroke: "#ed5a24", // primary orange for border lines
-                      strokeWidth: 0.5,
-                      outline: "none"
-                    },
-                    hover: {
-                      fill: "#2a2826", // dark-light brand color on hover (original)
-                      stroke: "#ed5a24", // primary orange borders
-                      strokeWidth: 0.5,
-                      outline: "none",
-                      cursor: "pointer"
-                    },
-                    pressed: {
-                      fill: "#af3f16", // primaryDark brand color when pressed
-                      stroke: "#ed5a24", // primary orange borders
-                      strokeWidth: 0.5,
-                      outline: "none"
-                    }
-                  }}
-                />
-              ))}
-            </Geographies>
-            
-            {markers.map(({ name, coordinates }) => (
-              <Marker key={name} coordinates={coordinates}>
-                <g
-                  onClick={(e) => handleRegionClick(name, e)}
-                  className="cursor-pointer hover:scale-110 transition-transform"
-                >
-                  <FaIcons.FaMapMarkerAlt color="#f1ead1" size={24} />
-                  <foreignObject
-                    x="-50"
-                    y="-40"
-                    width="100"
-                    height="30"
-                    className="pointer-events-auto"
-                  >
-                    <div 
-                      className="bg-accent text-primaryDark px-3 py-1 rounded-lg text-center text-sm w-full border border-primary cursor-pointer font-semibold"
-                      onClick={(e) => {
-                        e.stopPropagation(); 
-                        handleRegionClick(name, e);
-                      }}
-                    >
-                      {name}
-                    </div>
-                  </foreignObject>
-                </g>
-              </Marker>
-            ))}
-          </ZoomableGroup>
+          {isMobile ? (
+            <ZoomableGroup 
+              zoom={1} 
+              minZoom={1} 
+              maxZoom={4} // Allow zoom on mobile
+              translateExtent={[[-100, -100], [800, 500]]}
+            >
+              {MapContent} 
+            </ZoomableGroup>
+          ) : (
+            // Render directly without ZoomableGroup on desktop
+            MapContent 
+          )}
         </ComposableMap>
       </div>
       

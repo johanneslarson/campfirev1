@@ -51,7 +51,7 @@ interface DetailedArtist {
 }
 
 // API URL
-const API_URL = "http://localhost:8080/api";
+const API_URL = "http://localhost:8081/api";
 
 // Local cache for data to avoid multiple fetches
 let artistsCache: Artist[] = [];
@@ -149,7 +149,7 @@ export function getFeaturedTracks(): Promise<Track[]> {
         const featuredTrackIds = [
           "7b3037e3-6d71-46f8-8a6f-90a02fd0669b", // Right 1 4 Me by SYM1
           "d69762e0-536c-4be3-97a9-6505785d675c", // Live at Rhizome by Kiyan Saifi
-          "fc25f341-f677-4d2b-b2b0-d5f262e00056"  // The Rush by Patrick Amunson
+          "6f7a8b9c-0d1e-2f3a-4b5c-6d7e8f9a0b1c"  // Touch Earth Touch Sky by Hans Larson Trio
         ];
         
         const featuredTracks = tracks.filter(track => 
@@ -187,7 +187,7 @@ export function getFeaturedTracksSync(): Track[] {
   const featuredTrackIds = [
     "7b3037e3-6d71-46f8-8a6f-90a02fd0669b", // Right 1 4 Me by SYM1
     "d69762e0-536c-4be3-97a9-6505785d675c", // Live at Rhizome by Kiyan Saifi
-    "fc25f341-f677-4d2b-b2b0-d5f262e00056"  // The Rush by Patrick Amunson
+    "6f7a8b9c-0d1e-2f3a-4b5c-6d7e8f9a0b1c"  // Touch Earth Touch Sky by Hans Larson Trio
   ];
   
   const featuredTracks = allTracks.filter(track => 

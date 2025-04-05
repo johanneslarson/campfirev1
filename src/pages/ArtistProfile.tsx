@@ -67,7 +67,9 @@ function ArtistProfile() {
   return (
     <div className="p-6 max-w-screen-xl mx-auto space-y-8">
       {/* Artist Header */}
-      <div className="bg-gradient-to-r from-primaryDark to-primary rounded-campfire p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center gap-6">
+      <div className="bg-gradient-to-r from-primaryDark to-primary rounded-campfire p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center gap-6 relative overflow-hidden animate-gradient">
+        <div className="absolute inset-0 bg-gradient-to-r from-primaryDark via-primary to-primaryDark bg-[length:200%_100%] animate-gradient-flow"></div>
+        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6 w-full">
         {/* Artist Avatar - increased size */}
         {artist.imageUrl ? (
           <div className="w-40 h-40 md:w-48 md:h-48 rounded-lg overflow-hidden flex-shrink-0">
@@ -104,6 +106,7 @@ function ArtistProfile() {
             </div>
           )}
         </div>
+        </div>
       </div>
 
       {/* Tracks Section */}
@@ -114,7 +117,7 @@ function ArtistProfile() {
         
         {tracks.length > 0 ? (
           <div className="bg-dark-lighter rounded-campfire overflow-hidden">
-            <ul>
+            <ul className="p-0 m-0">
               {tracks.map((track, index) => (
                 <li 
                   key={track.id}
@@ -123,8 +126,8 @@ function ArtistProfile() {
                   }`}
                 >
                   <div className="flex items-center">
-                    <span className="text-gray-300 w-8 text-right">{index + 1}</span>
-                    <div className="ml-4">
+                    <span className="text-gray-300 w-4 text-center">{index + 1}</span>
+                    <div className="ml-2">
                       <p className="font-medium text-accent">{track.title}</p>
                       <p className="text-sm text-gray-300">{track.genre}</p>
                     </div>

@@ -16,7 +16,7 @@ function RoyaltiesDashboard() {
   percentages.sort((a, b) => b.amount - a.amount);
 
   return (
-    <div className="p-4 sm:p-6 max-w-screen-xl mx-auto space-y-6 sm:space-y-8">
+    <div className="px-4 sm:px-6 pt-10 pb-6 max-w-screen-xl mx-auto space-y-6 sm:space-y-8">
       <h1 className="text-2xl sm:text-3xl font-bold text-accent mb-6">Your Royalty Breakdown</h1>
       
       <div className="bg-dark-lighter rounded-campfire overflow-hidden p-4 sm:p-6">
