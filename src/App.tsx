@@ -38,9 +38,9 @@ function App() {
   }, []);
 
   return (
-    <div className="flex min-h-screen bg-dark text-accent">
+    <div className="flex flex-col min-h-screen bg-dark text-accent">
       {/* Desktop Sidebar */}
-      <div className="hidden md:block fixed top-0 left-0 h-full">
+      <div className="hidden md:block fixed top-0 left-0 h-full z-20">
         <Sidebar />
       </div>
       
@@ -48,16 +48,16 @@ function App() {
       <MobileSidebar isOpen={isMenuOpen} toggleMenu={toggleMenu} closeMenu={closeMenu} />
       
       {/* Main Content */}
-      <main className="flex-1 pb-28 md:ml-64 w-full pt-16 md:pt-0">
+      <main className="flex-1 pb-28 md:ml-64 w-full pt-16 md:pt-0 flex flex-col">
         {isLoading ? (
-          <div className="flex min-h-screen items-center justify-center">
+          <div className="flex-1 flex items-center justify-center">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primaryLight mx-auto mb-4"></div>
               <p className="text-lg">Loading Campfire...</p>
             </div>
           </div>
         ) : error ? (
-          <div className="flex min-h-screen items-center justify-center">
+          <div className="flex-1 flex items-center justify-center">
             <div className="text-center p-6 max-w-md">
               <div className="text-primaryLight text-5xl mb-4">⚠️</div>
               <h1 className="text-2xl font-bold mb-4">Something went wrong</h1>
@@ -71,17 +71,19 @@ function App() {
             </div>
           </div>
         ) : (
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/artists" element={<Artists />} />
-            <Route path="/artist/:id" element={<ArtistProfile />} />
-            <Route path="/map" element={<MusicMap />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/playlist" element={<Playlist />} />
-            <Route path="/dashboard" element={<RoyaltiesDashboard />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="*" element={<div className="p-8 text-center text-accent">404 - Page Not Found</div>} />
-          </Routes>
+          <div className="flex-1 flex flex-col">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/artists" element={<Artists />} />
+              <Route path="/artist/:id" element={<ArtistProfile />} />
+              <Route path="/map" element={<MusicMap />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/playlist" element={<Playlist />} />
+              <Route path="/dashboard" element={<RoyaltiesDashboard />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="*" element={<div className="flex-1 flex items-center justify-center p-8 text-center text-accent">404 - Page Not Found</div>} />
+            </Routes>
+          </div>
         )}
       </main>
       

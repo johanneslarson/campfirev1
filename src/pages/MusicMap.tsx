@@ -263,9 +263,9 @@ const MusicMap: React.FC = () => {
         </div>
       )}
       
-      <p className="mb-4 text-gray-300 pl-4">Explore music communities across the United States and discover artists from each region.</p>
+      <p className="text-gray-300 pl-4">Explore music communities across the United States and discover artists from each region.</p>
       
-      <div className="bg-dark-lighter p-0 rounded-lg overflow-hidden mx-4" style={{ height: 'calc(100vh - 160px)', minHeight: '400px' }}>
+      <div className="bg-dark-lighter p-0 rounded-lg overflow-hidden mx-4 flex-grow" style={{ minHeight: '300px' }}>
         <ComposableMap projection="geoAlbersUsa" className="w-full h-full">
           {isMobile ? (
             <ZoomableGroup 
