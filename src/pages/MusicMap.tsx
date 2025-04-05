@@ -38,6 +38,7 @@ const MusicMap: React.FC = () => {
   const [artistDetails, setArtistDetails] = useState<ArtistDetail[]>([]);
   const [showPopup, setShowPopup] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [mapReady, setMapReady] = useState(false);
 
   // Check if device is mobile on mount and window resize
   useEffect(() => {
@@ -53,6 +54,16 @@ const MusicMap: React.FC = () => {
     
     // Clean up
     return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
+
+  // Set map as ready after initial render
+  useEffect(() => {
+    // Small delay to ensure map is fully rendered
+    const timer = setTimeout(() => {
+      setMapReady(true);
+    }, 300);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -253,7 +264,7 @@ const MusicMap: React.FC = () => {
   }
 
   return (
-    <div className="p-0 sm:p-4 relative">
+    <div className="pt-4 px-3 sm:p-4 relative">
       <h1 className="text-2xl sm:text-3xl font-bold mb-0 sm:mb-1 text-primaryLight pl-2 sm:pl-4 pt-0 sm:pt-6">Music Map</h1>
       
       {error && (
@@ -268,19 +279,25 @@ const MusicMap: React.FC = () => {
       <div 
         className="bg-dark-lighter p-0 rounded-lg overflow-hidden mx-2 sm:mx-4 mb-2" 
         style={{ 
-          height: isMobile ? 'calc(100vh - 320px)' : 'calc(100vh - 160px)', 
-          minHeight: isMobile ? '220px' : '400px',
-          maxHeight: isMobile ? '350px' : 'none'
+          height: isMobile ? 'calc(100vh - 280px)' : 'calc(100vh - 160px)', 
+          minHeight: isMobile ? '240px' : '400px',
+          maxHeight: isMobile ? '400px' : 'none'
         }}
       >
-        <ComposableMap projection="geoAlbersUsa" className="w-full h-full">
+        <ComposableMap 
+          projection="geoAlbersUsa" 
+          className={`w-full h-full ${mapReady ? 'opacity-100' : 'opacity-90'}`}
+          style={{ transition: 'opacity 0.3s ease' }}
+        >
           {isMobile ? (
             <ZoomableGroup 
               zoom={1.0} 
-              center={[-90, 40]} 
+              center={[-82, 40]} 
               minZoom={1} 
               maxZoom={4}
               translateExtent={[[-100, -100], [800, 500]]}
+              className="touch-none"
+              style={{ pointerEvents: mapReady ? 'auto' : 'none' }}
             >
               {MapContent} 
             </ZoomableGroup>
