@@ -253,29 +253,30 @@ const MusicMap: React.FC = () => {
   }
 
   return (
-    <div className="p-2 sm:p-4 relative">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-0 sm:mb-1 text-primaryLight pl-2 sm:pl-4 pt-1 sm:pt-6">Music Map</h1>
+    <div className="p-0 sm:p-4 relative">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-0 sm:mb-1 text-primaryLight pl-2 sm:pl-4 pt-0 sm:pt-6">Music Map</h1>
       
       {error && (
-        <div className="bg-dark-lighter p-3 rounded-lg mb-2 text-primaryLight mx-2 sm:mx-4">
+        <div className="bg-dark-lighter p-2 sm:p-3 rounded-lg mb-1 sm:mb-2 text-primaryLight mx-2 sm:mx-4">
           <p>{error}</p>
           <p className="mt-1 text-gray-300">Using fallback data instead.</p>
         </div>
       )}
       
-      <p className="mb-2 sm:mb-4 text-gray-300 text-sm sm:text-base pl-2 sm:pl-4">Explore music communities across the United States and discover artists from each region.</p>
+      <p className="mb-1 sm:mb-4 text-gray-300 text-xs sm:text-base pl-2 sm:pl-4">Explore music communities across the United States and discover artists from each region.</p>
       
       <div 
-        className="bg-dark-lighter p-0 rounded-lg overflow-hidden mx-2 sm:mx-4" 
+        className="bg-dark-lighter p-0 rounded-lg overflow-hidden mx-2 sm:mx-4 mb-2" 
         style={{ 
-          height: isMobile ? 'calc(100vh - 220px)' : 'calc(100vh - 160px)', 
-          minHeight: isMobile ? '300px' : '400px' 
+          height: isMobile ? 'calc(100vh - 320px)' : 'calc(100vh - 160px)', 
+          minHeight: isMobile ? '220px' : '400px',
+          maxHeight: isMobile ? '350px' : 'none'
         }}
       >
         <ComposableMap projection="geoAlbersUsa" className="w-full h-full">
           {isMobile ? (
             <ZoomableGroup 
-              zoom={1.2} 
+              zoom={1.0} 
               center={[-90, 40]} 
               minZoom={1} 
               maxZoom={4}
