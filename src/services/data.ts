@@ -92,6 +92,20 @@ function getArtistImageExtension(name: string): string {
   return extensionMap[name] || '.jpg';  // Default to .jpg if not specified
 }
 
+// Helper to encode each segment of a relative asset path so that it works on case-sensitive, URL-encoded file systems (e.g. Vercel static hosting).
+//    We leave `http(s)://` URLs untouched.
+function encodeAssetPath(path: string): string {
+  if (!path) return path;
+  // Do not touch absolute URLs
+  if (path.startsWith('http')) return path;
+
+  // Split on '/' so we preserve the directory structure, then URI-encode each segment (other than the initial empty string for leading '/')
+  return path
+    .split('/')
+    .map((segment, idx) => (idx === 0 ? segment : encodeURIComponent(segment)))
+    .join('/');
+}
+
 // Helper to ensure track URLs are correct
 function normalizeTrackUrl(track: Track): Track {
   // Keep absolute URLs as-is
@@ -107,7 +121,7 @@ function normalizeTrackUrl(track: Track): Track {
   
   return {
     ...track,
-    url: cleanUrl
+    url: encodeAssetPath(cleanUrl)
   };
 }
 
@@ -195,13 +209,16 @@ export async function getAllArtists(): Promise<Artist[]> {
   }
   
   // Transform raw JSON (snake_case keys) to the Artist interface expected by the app
-  artistsCache = (artistsData as any[]).map((a: any) => ({
-    id: a.id,
-    name: a.name,
-    bio: a.bio,
-    imageUrl: a.image_url || `/assets/artists/${a.name.replace(/ /g, '')}${getArtistImageExtension(a.name)}`,
-    links: a.instagram ? [{ label: "Instagram", url: `https://www.instagram.com/${a.instagram}` }] : []
-  }));
+  artistsCache = (artistsData as any[]).map((a: any) => {
+    const rawImagePath = a.image_url || `/assets/artists/${a.name.replace(/ /g, '')}${getArtistImageExtension(a.name)}`;
+    return {
+      id: a.id,
+      name: a.name,
+      bio: a.bio,
+      imageUrl: encodeAssetPath(rawImagePath),
+      links: a.instagram ? [{ label: "Instagram", url: `https://www.instagram.com/${a.instagram}` }] : []
+    };
+  });
   return artistsCache;
 }
 

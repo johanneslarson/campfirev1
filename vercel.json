@@ -20,10 +20,6 @@
     {
       "src": "/api/communities",
       "dest": "/api/communities.ts"
-    },
-    {
-      "src": "/assets/(.*)",
-      "dest": "/public/assets/$1"
     }
   ]
 } 
