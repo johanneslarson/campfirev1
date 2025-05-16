@@ -59,6 +59,10 @@ function Home() {
       const featured = allArtists.filter(artist => 
         FEATURED_ARTIST_NAMES.includes(artist.name)
       );
+      // Sort the featured artists to match the order in FEATURED_ARTIST_NAMES
+      featured.sort((a, b) => {
+        return FEATURED_ARTIST_NAMES.indexOf(a.name) - FEATURED_ARTIST_NAMES.indexOf(b.name);
+      });
       setFeaturedArtists(featured);
       console.log("Featured artists:", featured);
     } catch (err) {
@@ -96,7 +100,7 @@ function Home() {
             <p className="text-gray-400">Loading featured artists...</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-4">
             {featuredArtists.map(artist => (
               <Link 
                 key={artist.id} 
@@ -141,7 +145,7 @@ function Home() {
             <p className="text-gray-400">Loading featured tracks...</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-4">
             {featuredTracks.map(track => (
               <div key={track.id} className="bg-dark-lighter rounded-campfire overflow-hidden group relative">
                 <div className="p-4 sm:p-5">
@@ -181,7 +185,7 @@ function Home() {
       {/* Platform Statistics */}
       <section>
         <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-accent">Platform Stats</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-4">
           {stats.map(stat => (
             <div key={stat.label} className="bg-dark-lighter p-4 sm:p-6 rounded-campfire text-center">
               <p className="text-3xl sm:text-5xl font-bold text-primaryLight mb-1 sm:mb-2">{stat.value}</p>
@@ -194,7 +198,7 @@ function Home() {
       {/* Community Stories */}
       <section>
         <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-accent">Community Stories</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-4">
           {stories.map(story => (
             <blockquote key={story.author} className="bg-dark-lighter p-4 sm:p-6 rounded-campfire relative border-l-4 border-primaryLight">
               <p className="italic text-accent mb-3 sm:mb-4">{story.message}</p>

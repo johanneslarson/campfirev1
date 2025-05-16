@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import { FaIcons } from "../utils/icons";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { HomeIcon, UsersIcon, UserGroupIcon, CurrencyDollarIcon } from "@heroicons/react/24/outline";
 
 interface MobileSidebarProps {
   isOpen: boolean;
@@ -58,7 +57,7 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
                 }`}
                 onClick={closeMenu}
               >
-                <HomeIcon className="h-5 w-5 mr-3" />
+                <FaIcons.FaHome className="h-5 w-5 mr-3" />
                 <span>Home</span>
               </Link>
             </li>
@@ -70,7 +69,7 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
                 }`}
                 onClick={closeMenu}
               >
-                <UsersIcon className="h-5 w-5 mr-3" />
+                <FaIcons.FaUsers className="h-5 w-5 mr-3" />
                 <span>Artists</span>
               </Link>
             </li>
@@ -82,7 +81,7 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
                 }`}
                 onClick={closeMenu}
               >
-                <UserGroupIcon className="h-5 w-5 mr-3" />
+                <FaIcons.FaUsers className="h-5 w-5 mr-3" />
                 <span>Communities</span>
               </Link>
             </li>
@@ -94,8 +93,20 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
                 }`}
                 onClick={closeMenu}
               >
-                <CurrencyDollarIcon className="h-5 w-5 mr-3" />
+                <FaIcons.FaDollarSign className="h-5 w-5 mr-3" />
                 <span>Royalties</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/settings"
+                className={`flex items-center px-4 py-2 text-sm font-medium rounded-md ${
+                  location.pathname === '/settings' ? 'bg-dark text-white' : 'text-accent hover:text-white'
+                }`}
+                onClick={closeMenu}
+              >
+                <FaIcons.FaCog className="h-5 w-5 mr-3" />
+                <span>Settings</span>
               </Link>
             </li>
           </ul>
