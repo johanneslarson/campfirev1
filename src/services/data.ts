@@ -79,14 +79,32 @@ export function getIsInitialized(): boolean {
   return isInitialized;
 }
 
+// Helper to get the correct image extension for each artist
+function getArtistImageExtension(name: string): string {
+  const extensionMap: { [key: string]: string } = {
+    'SYM1': '.png',
+    'Hans Larson Trio': '.jpeg',
+    'Patrick Amunson': '.jpeg',
+    'Sadie Habas': '.jpg',
+    'MadFrances': '.jpg',
+    'Kiyan Saifi': '.jpg'
+  };
+  return extensionMap[name] || '.jpg';  // Default to .jpg if not specified
+}
+
 // Helper to ensure track URLs are correct
 function normalizeTrackUrl(track: Track): Track {
   // Keep absolute URLs as-is
-  if (track.url.startsWith("http")) {
+  if (track.url.startsWith('http')) {
     return track;
   }
-  // Remove legacy "/api" prefix if present so it points to files under /assets
-  let cleanUrl = track.url.startsWith("/api/") ? track.url.replace("/api", "") : track.url;
+  
+  // Remove any /api prefix and ensure the path starts with /assets
+  let cleanUrl = track.url.replace('/api/', '/');
+  if (!cleanUrl.startsWith('/assets')) {
+    cleanUrl = `/assets${cleanUrl}`;
+  }
+  
   return {
     ...track,
     url: cleanUrl
@@ -181,7 +199,7 @@ export async function getAllArtists(): Promise<Artist[]> {
     id: a.id,
     name: a.name,
     bio: a.bio,
-    imageUrl: a.image_url || `/assets/artists/${a.name.replace(/ /g, '')}.jpg`,
+    imageUrl: a.image_url || `/assets/artists/${a.name.replace(/ /g, '')}${getArtistImageExtension(a.name)}`,
     links: a.instagram ? [{ label: "Instagram", url: `https://www.instagram.com/${a.instagram}` }] : []
   }));
   return artistsCache;
