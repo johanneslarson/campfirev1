@@ -223,12 +223,15 @@ export function getCommunityStories(): CommunityStory[] {
 export function getUserRoyaltyReport(): RoyaltyReport {
   // Static example data
   return {
-    totalMinutes: 1200,
-    totalAmount: 24.00,
+    totalMinutes: 397, // 6 hours and 37 minutes
+    totalAmount: 12.00,
     breakdown: [
-      ["Hans Larson Trio", 12.50],
-      ["Patrick Amunson", 6.25],
-      ["Jazzberry Patch", 5.25]
+      ["SYM1", 3.45],
+      ["Patrick Amunson", 2.60],
+      ["Kiyan Saifi", 2.15],
+      ["MadFrances", 2.00],
+      ["Sadie Habas", 1.30],
+      ["Hans Larson Trio", 0.50]
     ]
   };
 }
