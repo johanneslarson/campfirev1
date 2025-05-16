@@ -16,8 +16,6 @@ async fn main() -> std::io::Result<()> {
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
     
     // Setup assets path
-    // Try both with and without "backend/" prefix to handle running from
-    // either the project root or the backend directory
     let mut assets_path = PathBuf::from("assets");
     if !assets_path.exists() {
         assets_path = PathBuf::from("backend/assets");
@@ -57,7 +55,7 @@ async fn main() -> std::io::Result<()> {
     });
     
     // Setup HTTP server
-    info!("Starting HTTP server at http://localhost:8081");
+    info!("Starting HTTP server at http://0.0.0.0:8081");
     HttpServer::new(move || {
         // Configure CORS
         let cors = Cors::default()
@@ -65,6 +63,8 @@ async fn main() -> std::io::Result<()> {
             .allowed_origin("http://localhost:3001")
             .allowed_origin("http://localhost:3002")
             .allowed_origin("http://localhost:3003")
+            .allowed_origin("https://campfirev1.vercel.app")  // Add your Vercel domain
+            .allowed_origin("https://campfire-v1.vercel.app") // Common alternative
             .allowed_methods(vec!["GET", "POST", "PUT", "DELETE"])
             .allowed_headers(vec![header::AUTHORIZATION, header::ACCEPT, header::CONTENT_TYPE])
             .max_age(3600);
@@ -74,9 +74,8 @@ async fn main() -> std::io::Result<()> {
             .wrap(middleware::Logger::default())
             .app_data(app_state.clone())
             
-            // API Routes - combined all API routes into a single scope
+            // API Routes
             .service(web::scope("/api")
-                // Artist and track routes
                 .route("/artists", web::get().to(routes::artists::get_all))
                 .route("/artists/{id}", web::get().to(routes::artists::get_by_id))
                 .route("/artists/{id}/tracks", web::get().to(routes::artists::get_tracks))
@@ -116,7 +115,7 @@ async fn main() -> std::io::Result<()> {
                 })
             )
     })
-    .bind(("127.0.0.1", 8081))?
+    .bind(("0.0.0.0", 8081))?  // Listen on all interfaces
     .run()
     .await
 }

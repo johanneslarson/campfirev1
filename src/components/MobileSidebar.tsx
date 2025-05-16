@@ -90,6 +90,20 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
             </li>
             <li>
               <NavLink 
+                to="/playlist" 
+                className={({ isActive }) =>
+                  `flex items-center py-3 px-4 rounded-lg transition-colors ${
+                    isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
+                  }`
+                }
+                onClick={closeMenu}
+              >
+                <FaIcons.FaListUl className="mr-3" size={18} />
+                <span>Playlist</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink 
                 to="/dashboard" 
                 className={({ isActive }) =>
                   `flex items-center py-3 px-4 rounded-lg transition-colors ${

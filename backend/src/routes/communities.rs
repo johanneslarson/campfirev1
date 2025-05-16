@@ -17,6 +17,7 @@ pub async fn get_communities(data: web::Data<AppState>) -> impl Responder {
         .map(|a| ArtistSummary { id: a.id, name: a.name.clone() })
         .collect();
 
+<<<<<<< HEAD
     let portland_artists: Vec<ArtistSummary> = all_artists.iter()
         .filter(|a| a.name == "MadFrances")
         .map(|a| ArtistSummary { id: a.id, name: a.name.clone() })
@@ -32,6 +33,11 @@ pub async fn get_communities(data: web::Data<AppState>) -> impl Responder {
         Community { name: "DMV".to_string(), artists: dmv_artists },
         Community { name: "Portland".to_string(), artists: portland_artists },
         Community { name: "Boston".to_string(), artists: boston_artists },
+=======
+    let communities = vec![
+        Community { name: "Twin Cities".to_string(), artists: twin_cities_artists },
+        Community { name: "DMV".to_string(), artists: dmv_artists },
+>>>>>>> bcfb49d84db7311ca1b67b767e5824c63f1f33e8
     ];
     
     HttpResponse::Ok().json(communities)

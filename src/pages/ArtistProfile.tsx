@@ -24,7 +24,7 @@ function ArtistProfile() {
         const artistData = await getArtistById(id);
         
         if (artistData) {
-          console.log(`Successfully loaded artist data:`, artistData);
+          console.log("Successfully loaded artist data:", artistData);
           setArtist(artistData);
           setError(null);
           document.title = `${artistData.name} | Campfire`;
@@ -133,6 +133,7 @@ function ArtistProfile() {
                     <span className="text-gray-300 w-4 text-center">{index + 1}</span>
                     <div className="ml-2">
                       <p className="font-medium text-accent">{track.title}</p>
+                      <p className="text-sm text-gray-300">{track.genre}</p>
                     </div>
                   </div>
                   <button 
