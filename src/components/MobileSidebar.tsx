@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FaIcons } from "../utils/icons";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { HomeIcon, UsersIcon, UserGroupIcon, CurrencyDollarIcon } from "@heroicons/react/24/outline";
 
 interface MobileSidebarProps {
   isOpen: boolean;
@@ -9,6 +12,8 @@ interface MobileSidebarProps {
 }
 
 function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
+  const location = useLocation();
+
   return (
     <>
       {/* Backdrop */}
@@ -46,117 +51,52 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
         <nav>
           <ul className="space-y-2 px-4 py-2">
             <li>
-              <NavLink 
-                to="/" 
-                className={({ isActive }) =>
-                  `flex items-center py-3 px-4 rounded-lg transition-colors ${
-                    isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
-                  }`
-                }
-                end
+              <Link
+                to="/"
+                className={`flex items-center px-4 py-2 text-sm font-medium rounded-md ${
+                  location.pathname === '/' ? 'bg-dark text-white' : 'text-accent hover:text-white'
+                }`}
                 onClick={closeMenu}
               >
-                <FaIcons.FaHome className="mr-3" size={18} />
+                <HomeIcon className="h-5 w-5 mr-3" />
                 <span>Home</span>
-              </NavLink>
+              </Link>
             </li>
             <li>
-              <NavLink 
-                to="/artists" 
-                className={({ isActive }) =>
-                  `flex items-center py-3 px-4 rounded-lg transition-colors ${
-                    isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
-                  }`
-                }
+              <Link
+                to="/artists"
+                className={`flex items-center px-4 py-2 text-sm font-medium rounded-md ${
+                  location.pathname.startsWith('/artists') ? 'bg-dark text-white' : 'text-accent hover:text-white'
+                }`}
                 onClick={closeMenu}
               >
-                <FaIcons.FaUserFriends className="mr-3" size={18} />
+                <UsersIcon className="h-5 w-5 mr-3" />
                 <span>Artists</span>
-              </NavLink>
+              </Link>
             </li>
             <li>
-              <NavLink 
-                to="/search" 
-                className={({ isActive }) =>
-                  `flex items-center py-3 px-4 rounded-lg transition-colors ${
-                    isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
-                  }`
-                }
+              <Link
+                to="/communities"
+                className={`flex items-center px-4 py-2 text-sm font-medium rounded-md ${
+                  location.pathname.startsWith('/communities') ? 'bg-dark text-white' : 'text-accent hover:text-white'
+                }`}
                 onClick={closeMenu}
               >
-                <FaIcons.FaSearch className="mr-3" size={18} />
-                <span>Search</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink 
-                to="/playlist" 
-                className={({ isActive }) =>
-                  `flex items-center py-3 px-4 rounded-lg transition-colors ${
-                    isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
-                  }`
-                }
-                onClick={closeMenu}
-              >
-                <FaIcons.FaListUl className="mr-3" size={18} />
-                <span>Playlist</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink 
-                to="/dashboard" 
-                className={({ isActive }) =>
-                  `flex items-center py-3 px-4 rounded-lg transition-colors ${
-                    isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-dark-light'
-                  }`
-                }
-                onClick={closeMenu}
-              >
-                <FaIcons.FaChartBar className="mr-3" size={18} />
-                <span>Royalties</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink 
-                to="/settings" 
-                className={({ isActive }) =>
-                  `flex items-center py-3 px-4 rounded-lg transition-colors ${
-                    isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-dark-light'
-                  }`
-                }
-                onClick={closeMenu}
-              >
-                <FaIcons.FaCog className="mr-3" size={18} />
-                <span>Settings</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink 
-                to="/map" 
-                className={({ isActive }) =>
-                  `flex items-center py-3 px-4 rounded-lg transition-colors ${
-                    isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
-                  }`
-                }
-                onClick={closeMenu}
-              >
-                <FaIcons.FaMap className="mr-3" size={18} />
-                <span>Music Map</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink 
-                to="/communities" 
-                className={({ isActive }) =>
-                  `flex items-center py-3 px-4 rounded-lg transition-colors ${
-                    isActive ? 'bg-primaryDark text-white' : 'text-gray-300 hover:bg-dark-light hover:text-primaryLight'
-                  }`
-                }
-                onClick={closeMenu}
-              >
-                <FaIcons.FaUsers className="mr-3" size={18} />
+                <UserGroupIcon className="h-5 w-5 mr-3" />
                 <span>Communities</span>
-              </NavLink>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/royalties"
+                className={`flex items-center px-4 py-2 text-sm font-medium rounded-md ${
+                  location.pathname === '/royalties' ? 'bg-dark text-white' : 'text-accent hover:text-white'
+                }`}
+                onClick={closeMenu}
+              >
+                <CurrencyDollarIcon className="h-5 w-5 mr-3" />
+                <span>Royalties</span>
+              </Link>
             </li>
           </ul>
         </nav>

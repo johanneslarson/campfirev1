@@ -79,7 +79,7 @@ export function getIsInitialized(): boolean {
   return isInitialized;
 }
 
-// Helper to get the correct image extension for each artist
+// Helper to get the correct image extension and folder name for each artist
 function getArtistImageExtension(name: string): string {
   const extensionMap: { [key: string]: string } = {
     'SYM1': '.png',
@@ -90,6 +90,14 @@ function getArtistImageExtension(name: string): string {
     'Kiyan Saifi': '.jpg'
   };
   return extensionMap[name] || '.jpg';  // Default to .jpg if not specified
+}
+
+// Helper to get the correct folder name for an artist (handling case sensitivity)
+function getArtistFolderName(name: string): string {
+  const folderMap: { [key: string]: string } = {
+    'MadFrances': 'madfrances'
+  };
+  return folderMap[name] || name.replace(/ /g, '');
 }
 
 // Helper to encode each segment of a relative asset path so that it works on case-sensitive, URL-encoded file systems (e.g. Vercel static hosting).
@@ -210,7 +218,8 @@ export async function getAllArtists(): Promise<Artist[]> {
   
   // Transform raw JSON (snake_case keys) to the Artist interface expected by the app
   artistsCache = (artistsData as any[]).map((a: any) => {
-    const rawImagePath = a.image_url || `/assets/artists/${a.name.replace(/ /g, '')}${getArtistImageExtension(a.name)}`;
+    const folderName = getArtistFolderName(a.name);
+    const rawImagePath = a.image_url || `/assets/artists/${folderName}${getArtistImageExtension(a.name)}`;
     return {
       id: a.id,
       name: a.name,

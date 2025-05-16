@@ -1,7 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { FaIcons } from "../utils/icons";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function Sidebar() {
+  const location = useLocation();
+
   return (
     <aside className="w-64 bg-dark-lighter min-h-screen p-4">
       <div className="mb-5 mt-4 flex items-center justify-start pl-1">

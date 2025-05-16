@@ -36,6 +36,15 @@ function Header() {
           <li><Link to="/settings" className="block px-4 py-2 hover:text-primary">Settings</Link></li>
         </ul>
       </nav>
+
+      <div className="absolute right-0 mt-2 w-48 bg-dark-lighter rounded-md shadow-lg py-1 z-50">
+        <ul>
+          <li><Link to="/profile" className="block px-4 py-2 hover:text-primary">Profile</Link></li>
+          <li><Link to="/settings" className="block px-4 py-2 hover:text-primary">Settings</Link></li>
+          <li><hr className="my-1 border-dark" /></li>
+          <li><button onClick={handleLogout} className="block w-full text-left px-4 py-2 hover:text-primary">Logout</button></li>
+        </ul>
+      </div>
     </header>
   );
 }
