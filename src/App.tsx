@@ -5,9 +5,9 @@ import MobileSidebar from "./components/MobileSidebar";
 import Player from "./components/Player";
 import Home from "./pages/Home";
 import Artists from "./pages/Artists";
-import ArtistDetail from "./pages/ArtistDetail";
+import ArtistProfile from "./pages/ArtistProfile";
 import Communities from "./pages/Communities";
-import Royalties from "./pages/Royalties";
+import RoyaltiesDashboard from "./pages/RoyaltiesDashboard";
 import { initializeData } from "./services/data";
 import Header from "./components/Header";
 
@@ -54,9 +54,9 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/artists" element={<Artists />} />
-              <Route path="/artists/:id" element={<ArtistDetail />} />
+              <Route path="/artists/:id" element={<ArtistProfile />} />
               <Route path="/communities" element={<Communities />} />
-              <Route path="/royalties" element={<Royalties />} />
+              <Route path="/dashboard" element={<RoyaltiesDashboard />} />
             </Routes>
           </main>
 

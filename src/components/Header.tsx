@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import logoImage from "../assets/logo.png";
 
-function Header() {
+interface HeaderProps {
+  toggleMobileMenu: () => void;
+}
+
+function Header({ toggleMobileMenu }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -17,7 +21,7 @@ function Header() {
       <button 
         className="md:hidden text-white text-xl" 
         aria-label="Toggle navigation menu"
-        onClick={() => setMenuOpen(!menuOpen)}
+        onClick={toggleMobileMenu}
       >
         ☰
       </button>
@@ -31,20 +35,10 @@ function Header() {
         <ul className="md:flex md:space-x-6">
           <li><Link to="/" className="block px-4 py-2 hover:text-primary">Home</Link></li>
           <li><Link to="/search" className="block px-4 py-2 hover:text-primary">Search</Link></li>
-          <li><Link to="/playlist" className="block px-4 py-2 hover:text-primary">Playlist</Link></li>
           <li><Link to="/dashboard" className="block px-4 py-2 hover:text-primary">Royalties</Link></li>
           <li><Link to="/settings" className="block px-4 py-2 hover:text-primary">Settings</Link></li>
         </ul>
       </nav>
-
-      <div className="absolute right-0 mt-2 w-48 bg-dark-lighter rounded-md shadow-lg py-1 z-50">
-        <ul>
-          <li><Link to="/profile" className="block px-4 py-2 hover:text-primary">Profile</Link></li>
-          <li><Link to="/settings" className="block px-4 py-2 hover:text-primary">Settings</Link></li>
-          <li><hr className="my-1 border-dark" /></li>
-          <li><button onClick={handleLogout} className="block w-full text-left px-4 py-2 hover:text-primary">Logout</button></li>
-        </ul>
-      </div>
     </header>
   );
 }
