@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaIcons } from '../utils/icons';
-import { getAllArtists, Artist } from '../services/data';
-
-// API URL
-const API_URL = 'http://localhost:8081/api';
-
-interface Community {
-  name: string;
-  artists: { id: string; name: string }[];
-}
+import { getAllArtists, Artist, getAllCommunities, Community } from '../services/data';
 
 interface ArtistDetail extends Artist {
   communityName?: string;
@@ -24,53 +16,15 @@ const Communities: React.FC = () => {
   const [selectedCommunity, setSelectedCommunity] = useState<string | null>(null);
 
   useEffect(() => {
-    // Fetch community data
-    const fetchCommunities = async () => {
+    // Load community data from static JSON
+    const loadCommunities = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(`${API_URL}/communities`);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        
-        const data = await response.json();
+        const data = getAllCommunities();
         setCommunities(data);
       } catch (err) {
         console.error('Failed to load communities:', err);
-        setError('Failed to load communities data. Please try again later.');
-        
-        // Create fallback data if API fails
-        const fallbackData: Community[] = [
-          {
-            name: "Twin Cities",
-            artists: [
-              { id: "d701e009-be8b-4a0d-bd79-0167d1d37cb1", name: "Patrick Amunson" },
-              { id: "2beb8103-14fe-4fb6-98ab-0d98bfaa2f71", name: "SYM1" },
-              { id: "80e1d36d-70ed-4736-9069-b12812000870", name: "Hans Larson Trio" }
-            ]
-          },
-          {
-            name: "DMV",
-            artists: [
-              { id: "cf23d5a5-ca63-4f2c-8309-338e96770e90", name: "Kiyan Saifi" }
-            ]
-          },
-          {
-            name: "Portland",
-            artists: [
-              { id: "1af3af1d-d849-4ee3-890c-154353e58fdf", name: "MadFrances" }
-            ]
-          },
-          {
-            name: "Boston",
-            artists: [
-              { id: "61ddcd11-0c13-46b0-872e-51517d66caea", name: "Sadie Habas" }
-            ]
-          }
-        ];
-        
-        setCommunities(fallbackData);
+        setError('Failed to load communities data.');
       } finally {
         setIsLoading(false);
       }
@@ -92,7 +46,7 @@ const Communities: React.FC = () => {
       }
     };
     
-    fetchCommunities();
+    loadCommunities();
     loadArtistDetails();
   }, []);
 

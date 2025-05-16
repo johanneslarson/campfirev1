@@ -2,21 +2,13 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from "react-simple-maps";
 import { FaIcons } from "../utils/icons";
-import { getAllArtists, Artist } from '../services/data';
+import { getAllCommunities, Community, getAllArtists, Artist } from '../services/data';
 
 // Define US map topology JSON URL
 const US_MAP_TOPO_URL = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
 
-// API URL
-const API_URL = "http://localhost:8081/api";
-
 // Mobile breakpoint
 const MOBILE_BREAKPOINT = 768;
-
-interface Community {
-  name: string;
-  artists: { id: string; name: string; }[];
-}
 
 interface ArtistDetail {
   id: string;
@@ -70,53 +62,16 @@ const MusicMap: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // Fetch community data from back-end
-    const fetchCommunities = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(`${API_URL}/communities`);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        setCommunities(data);
-        setError(null); // Clear any existing error when successful
-      } catch (err) {
-        console.error('Failed to load communities', err);
-        
-        // Create fallback data if API fails
-        const fallbackData: Community[] = [
-          {
-            name: "Twin Cities",
-            artists: [
-              { id: "118809eb-e984-4d75-8de8-791d25de5b3a", name: "SYM1" },
-              { id: "24c9597b-3c04-4134-b7ef-ccd62dc5b4a0", name: "Patrick Amunson" },
-              { id: "d7d9451b-695f-4a33-a214-1b3839bb2083", name: "Hans Larson Trio" }
-            ]
-          },
-          {
-            name: "DMV",
-            artists: [
-              { id: "5f767b5c-75e2-4246-9687-893be2cb3900", name: "Kiyan Saifi" }
-            ]
-          }
-        ];
-        
-        setCommunities(fallbackData);
-        // Only show error if fallback data isn't available or is empty
-        if (!fallbackData || fallbackData.length === 0) {
-          setError('Failed to load community data. Please try again later.');
-        } else {
-          setError(null);
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    fetchCommunities();
+    try {
+      setIsLoading(true);
+      const data = getAllCommunities();
+      setCommunities(data);
+    } catch (err) {
+      console.error('Failed to load communities', err);
+      setError('Failed to load community data.');
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   // Fetch detailed artist information for the selected community's artists
