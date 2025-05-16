@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaIcons } from '../utils/icons';
 import { getAllArtists, Artist } from '../services/data';
-
-// API URL
-const API_URL = 'http://localhost:8081/api';
+import { API_URL } from '../config';
 
 interface Community {
   name: string;
@@ -192,11 +190,23 @@ const Communities: React.FC = () => {
                     >
                       <div className="h-56 overflow-hidden">
                         <img
-                          src={artistDetail?.imageUrl || `/assets/artists/${artist.name.replace(/ /g, '')}.jpg`}
+                          src={artistDetail?.imageUrl || `/assets/artists/${encodeURIComponent(artist.name)}.jpeg`}
                           alt={artist.name}
                           className="w-full h-full object-cover"
+                          data-fallback="jpeg"
                           onError={(e) => {
-                            (e.target as HTMLImageElement).src = '/assets/default-artist.jpg';
+                            const img = e.target as HTMLImageElement;
+                            const current = img.getAttribute('data-fallback');
+                            const base = `/assets/artists/${encodeURIComponent(artist.name)}`;
+                            if (current === 'jpeg') {
+                              img.setAttribute('data-fallback', 'jpg');
+                              img.src = `${base}.jpg`;
+                            } else if (current === 'jpg') {
+                              img.setAttribute('data-fallback', 'png');
+                              img.src = `${base}.png`;
+                            } else {
+                              img.src = '/assets/default-artist.jpg';
+                            }
                           }}
                         />
                       </div>

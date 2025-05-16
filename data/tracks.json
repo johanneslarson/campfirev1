@@ -1,0 +1,38 @@
+[
+  {
+    "id": "7b3037e3-6d71-46f8-8a6f-90a02fd0669b",
+    "title": "Right 1 4 Me",
+    "artist_id": "2beb8103-14fe-4fb6-98ab-0d98bfaa2f71",
+    "artist_name": "SYM1",
+    "genre": "Hyperpop",
+    "url": "/assets/tracks/SYM1/Right 1 4 Me Master 2 [2024-03-06 195528].m4a",
+    "file_type": "m4a"
+  },
+  {
+    "id": "d69762e0-536c-4be3-97a9-6505785d675c",
+    "title": "Live at Rhizome",
+    "artist_id": "cf23d5a5-ca63-4f2c-8309-338e96770e90",
+    "artist_name": "Kiyan Saifi",
+    "genre": "Experimental",
+    "url": "/assets/tracks/KiyanSaifi/Live at Rhizome.m4a",
+    "file_type": "m4a"
+  },
+  {
+    "id": "fc25f341-f677-4d2b-b2b0-d5f262e00056",
+    "title": "The Rush",
+    "artist_id": "d701e009-be8b-4a0d-bd79-0167d1d37cb1",
+    "artist_name": "Patrick Amunson",
+    "genre": "Pop",
+    "url": "/assets/tracks/PatrickAmunson/Patrick Amunson - The Rush.m4a",
+    "file_type": "m4a"
+  },
+  {
+    "id": "fbddda3c-86e8-456a-80e2-5ebad1e1f0c2",
+    "title": "Spain",
+    "artist_id": "80e1d36d-70ed-4736-9069-b12812000870",
+    "artist_name": "Hans Larson Trio",
+    "genre": "Jazz",
+    "url": "/assets/tracks/HansLarsonTrio/Spain.mp3",
+    "file_type": "mp3"
+  }
+] 

@@ -1,5 +1,8 @@
 // src/services/data.ts
 
+// Import API_URL and BACKEND_HOST from config
+import { API_URL, BACKEND_HOST } from "../config";
+
 // Define interfaces for data types
 export interface Artist {
   id: string;
@@ -50,10 +53,7 @@ interface DetailedArtist {
   links?: Array<{ label: string; url: string }>;
 }
 
-// API URL
-const API_URL = "http://localhost:8081/api";
-
-// Log that we're using this API URL for debugging
+// Log that we're using the API URL for debugging (defined in config)
 console.log(`Using API URL: ${API_URL}`);
 
 // Local cache for data to avoid multiple fetches
@@ -95,7 +95,7 @@ function normalizeTrackUrl(track: Track): Track {
   // Otherwise prepend the backend host (but NOT an extra /api prefix)
   return {
     ...track,
-    url: `http://localhost:8081${track.url.startsWith('/') ? '' : '/'}${track.url}`
+    url: `${BACKEND_HOST}${track.url.startsWith('/') ? '' : '/'}${track.url}`
   };
 }
 

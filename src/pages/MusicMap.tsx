@@ -3,12 +3,10 @@ import { Link } from 'react-router-dom';
 import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from "react-simple-maps";
 import { FaIcons } from "../utils/icons";
 import { getAllArtists, Artist } from '../services/data';
+import { API_URL } from '../config';
 
 // Define US map topology JSON URL
 const US_MAP_TOPO_URL = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
-
-// API URL
-const API_URL = "http://localhost:8081/api";
 
 // Mobile breakpoint
 const MOBILE_BREAKPOINT = 768;
@@ -341,17 +339,26 @@ const MusicMap: React.FC = () => {
                 {artistDetails.map(artist => (
                   <div key={artist.id} className="bg-dark p-3 sm:p-4 rounded-lg flex flex-col h-full">
                     <div className="flex items-center mb-2 sm:mb-3">
-                      {artist.imageUrl ? (
-                        <img 
-                          src={artist.imageUrl} 
-                          alt={artist.name}
-                          className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg mr-3 sm:mr-4"
-                        />
-                      ) : (
-                        <div className="w-20 h-20 sm:w-24 sm:h-24 bg-dark-light rounded-lg mr-3 sm:mr-4 flex items-center justify-center">
-                          <FaIcons.FaUser size={36} className="text-accent" />
-                        </div>
-                      )}
+                      <img 
+                        src={artist.imageUrl || `/assets/artists/${encodeURIComponent(artist.name)}.jpeg`} 
+                        alt={artist.name}
+                        className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg mr-3 sm:mr-4"
+                        data-fallback="jpeg"
+                        onError={(e) => {
+                          const img = e.target as HTMLImageElement;
+                          const current = img.getAttribute('data-fallback');
+                          const base = `/assets/artists/${encodeURIComponent(artist.name)}`;
+                          if (current === 'jpeg') {
+                            img.setAttribute('data-fallback', 'jpg');
+                            img.src = `${base}.jpg`;
+                          } else if (current === 'jpg') {
+                            img.setAttribute('data-fallback', 'png');
+                            img.src = `${base}.png`;
+                          } else {
+                            img.src = '/assets/default-artist.jpg';
+                          }
+                        }}
+                      />
                       <div>
                         <h3 className="text-lg sm:text-xl font-semibold text-primaryLight mb-1">
                           {artist.name}

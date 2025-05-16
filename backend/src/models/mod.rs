@@ -6,8 +6,11 @@ pub struct Artist {
     pub id: Uuid,
     pub name: String,
     pub bio: String,
+<<<<<<< HEAD
     pub instagram: Option<String>,
     pub image_url: Option<String>,
+=======
+>>>>>>> bcfb49d84db7311ca1b67b767e5824c63f1f33e8
 }
 
 // New struct for community data

@@ -153,6 +153,7 @@ function Home() {
                           {track.artist_name}
                         </Link>
                       </p>
+                      <p className="text-sm text-gray-400">Genre: {track.genre}</p>
                     </div>
                     <button 
                       onClick={() => handlePlayTrack(track)}

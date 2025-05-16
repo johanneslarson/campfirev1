@@ -82,8 +82,6 @@ function Player() {
   useEffect(() => {
     if (!audioRef.current || !isAudioInitialized) return;
     
-    console.log("[Player.tsx] isPlaying effect triggered. isPlaying:", isPlaying, "Current track:", currentTrack?.title);
-
     if (isPlaying && currentTrack) {
       // Ensure src is set correctly before playing
       if (audioRef.current.src !== currentTrack.url) {
@@ -107,7 +105,7 @@ function Player() {
       console.log("[Player.tsx] isPlaying effect: Pausing audio.");
       audioRef.current.pause();
     }
-  }, [isPlaying, currentTrack, isAudioInitialized]); // currentTrack dependency added here as well, as it's used.
+  }, [isPlaying, currentTrack, isAudioInitialized]);
 
   // Effect to handle track ending
   useEffect(() => {

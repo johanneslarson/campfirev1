@@ -29,7 +29,7 @@ function Artists() {
         const allArtists = await getAllArtists();
         console.log("Artists loaded:", allArtists);
         
-        // Instead of using hardcoded IDs, just display all artists from the API
+        // Display all artists from the API
         setArtists(allArtists);
         
         // Get tracks for each artist and build a map
@@ -53,13 +53,11 @@ function Artists() {
           const aCount = tracks[a.id]?.length || 0;
           const bCount = tracks[b.id]?.length || 0;
           if (aCount !== bCount) {
-            return aCount - bCount; // fewer tracks first
+            return aCount - bCount;
           }
-          // Tie-breaker: alphabetical by name (case-insensitive)
           return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
         });
 
-        // Update state
         setArtistTracks(tracks);
         setArtists(sortedArtists);
       } catch (error) {
@@ -145,6 +143,7 @@ function Artists() {
                           <span className="text-gray-300 w-4 text-center">{index + 1}</span>
                           <div className="ml-2">
                             <p className="font-medium text-accent">{track.title}</p>
+                            <p className="text-sm text-gray-300">{track.genre}</p>
                           </div>
                         </div>
                         <button 
