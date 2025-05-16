@@ -295,7 +295,7 @@ impl TrackService {
                                     },
                                     "SYM1" => "R&B".to_string(),
                                     "KiyanSaifi" => "Electronic".to_string(),
-                                    "MadFrances" => "Indie Rock".to_string(),
+                                    "MadFrances" => "Soft Rock".to_string(),
                                     "SadieHabas" => "Indie Pop".to_string(),
                                     _ => "Other".to_string(),
                                 };
