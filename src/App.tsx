@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import MobileSidebar from "./components/MobileSidebar";
 import Player from "./components/Player";
@@ -9,7 +9,9 @@ import ArtistProfile from "./pages/ArtistProfile";
 import Communities from "./pages/Communities";
 import RoyaltiesDashboard from "./pages/RoyaltiesDashboard";
 import { initializeData } from "./services/data";
-import Header from "./components/Header";
+import Search from "./pages/Search";
+import Settings from "./pages/Settings";
+import MusicMap from "./pages/MusicMap";
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -35,36 +37,43 @@ function App() {
     loadData();
   }, []);
 
+  if (isLoading) {
+    return <div className="flex h-screen items-center justify-center bg-dark text-white">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="flex h-screen items-center justify-center bg-dark text-white">{error}</div>;
+  }
+
   return (
-    <Router>
-      <div className="flex h-screen bg-dark text-white">
-        {/* Desktop Sidebar */}
-        <div className="hidden md:block">
-          <Sidebar />
-        </div>
-
-        {/* Mobile Sidebar */}
-        <MobileSidebar isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} closeMenu={closeMobileMenu} />
-
-        {/* Main Content */}
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <Header toggleMobileMenu={toggleMobileMenu} />
-          
-          <main className="flex-1 overflow-x-hidden overflow-y-auto bg-dark">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/artists" element={<Artists />} />
-              <Route path="/artists/:id" element={<ArtistProfile />} />
-              <Route path="/communities" element={<Communities />} />
-              <Route path="/dashboard" element={<RoyaltiesDashboard />} />
-            </Routes>
-          </main>
-
-          {/* Player */}
-          <Player />
-        </div>
+    <div className="flex h-screen bg-dark text-white">
+      {/* Desktop Sidebar */}
+      <div className="hidden md:block">
+        <Sidebar />
       </div>
-    </Router>
+
+      {/* Mobile Sidebar */}
+      <MobileSidebar isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} closeMenu={closeMobileMenu} />
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-dark pb-28">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/artists" element={<Artists />} />
+            <Route path="/artists/:id" element={<ArtistProfile />} />
+            <Route path="/communities" element={<Communities />} />
+            <Route path="/dashboard" element={<RoyaltiesDashboard />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/map" element={<MusicMap />} />
+          </Routes>
+        </main>
+
+        {/* Player */}
+        <Player />
+      </div>
+    </div>
   );
 }
 

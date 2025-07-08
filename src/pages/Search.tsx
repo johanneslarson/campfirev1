@@ -52,7 +52,7 @@ function Search() {
                       <div className="ml-4">
                         <p className="font-medium text-accent">{track.title}</p>
                         <p className="text-sm text-gray-300">
-                          <Link to={`/artist/${track.artist_id}`} className="hover:underline">
+                          <Link to={`/artists/${track.artist_id}`} className="hover:underline">
                             {track.artist_name}
                           </Link>
                           <span className="mx-2">•</span>

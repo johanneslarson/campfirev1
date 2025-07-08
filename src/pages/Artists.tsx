@@ -115,7 +115,7 @@ function Artists() {
                   </div>
                 )}
                 <div>
-                  <Link to={`/artist/${artist.id}`} className="text-2xl font-bold text-accent hover:text-primaryLight transition-colors">
+                  <Link to={`/artists/${artist.id}`} className="text-2xl font-bold text-accent hover:text-primaryLight transition-colors">
                     {artist.name}
                   </Link>
                   <p className="text-gray-400 text-sm">

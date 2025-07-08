@@ -104,7 +104,7 @@ function Home() {
             {featuredArtists.map(artist => (
               <Link 
                 key={artist.id} 
-                to={`/artist/${artist.id}`}
+                to={`/artists/${artist.id}`}
                 className="block relative h-60 rounded-campfire overflow-hidden group transition-transform transform hover:scale-[1.02]"
               >
                 {/* Artist Image */}
@@ -153,7 +153,7 @@ function Home() {
                     <div>
                       <h3 className="font-bold text-lg sm:text-xl mb-1 text-accent">{track.title}</h3>
                       <p className="text-gray-300 mb-1">
-                        <Link to={`/artist/${track.artist_id}`} className="hover:text-primary">
+                        <Link to={`/artists/${track.artist_id}`} className="hover:text-primary">
                           {track.artist_name}
                         </Link>
                       </p>
@@ -182,19 +182,6 @@ function Home() {
         )}
       </section>
 
-      {/* Platform Statistics */}
-      <section>
-        <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-accent">Platform Stats</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-4">
-          {stats.map(stat => (
-            <div key={stat.label} className="bg-dark-lighter p-4 sm:p-6 rounded-campfire text-center">
-              <p className="text-3xl sm:text-5xl font-bold text-primaryLight mb-1 sm:mb-2">{stat.value}</p>
-              <p className="text-sm text-gray-300">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-      
       {/* Community Stories */}
       <section>
         <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-accent">Community Stories</h2>
@@ -204,6 +191,19 @@ function Home() {
               <p className="italic text-accent mb-3 sm:mb-4">{story.message}</p>
               <footer className="text-sm text-gray-300">— {story.author}</footer>
             </blockquote>
+          ))}
+        </div>
+      </section>
+
+      {/* Platform Statistics */}
+      <section>
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-accent">Platform Stats</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-4">
+          {stats.map(stat => (
+            <div key={stat.label} className="bg-dark-lighter p-4 sm:p-6 rounded-campfire text-center">
+              <p className="text-3xl sm:text-5xl font-bold text-primaryLight mb-1 sm:mb-2">{stat.value}</p>
+              <p className="text-sm text-gray-300">{stat.label}</p>
+            </div>
           ))}
         </div>
       </section>

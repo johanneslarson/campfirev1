@@ -312,7 +312,7 @@ const MusicMap: React.FC = () => {
                           {artist.name}
                         </h3>
                         <Link 
-                          to={`/artist/${artist.id}`}
+                          to={`/artists/${artist.id}`}
                           className="text-accent hover:text-primaryLight inline-flex items-center text-sm"
                         >
                           <span>Artist Profile</span>
@@ -328,7 +328,7 @@ const MusicMap: React.FC = () => {
                     )}
                     
                     <Link 
-                      to={`/artist/${artist.id}`}
+                      to={`/artists/${artist.id}`}
                       className="bg-primary hover:bg-primaryDark text-white py-2 px-4 rounded-lg text-center transition-colors mt-auto"
                     >
                       Listen to Tracks

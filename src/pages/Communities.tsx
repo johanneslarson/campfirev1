@@ -141,7 +141,7 @@ const Communities: React.FC = () => {
                   return (
                     <Link 
                       key={artist.id}
-                      to={`/artist/${artist.id}`}
+                      to={`/artists/${artist.id}`}
                       className="bg-dark rounded-lg overflow-hidden hover:shadow-lg transition-shadow hover:opacity-90"
                     >
                       <div className="h-56 overflow-hidden">

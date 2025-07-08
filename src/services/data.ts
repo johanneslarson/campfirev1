@@ -61,10 +61,9 @@ let tracksCache: Track[] = [];
 let isInitialized = false;
 
 // Community stories (static data)
-const communityStories: CommunityStory[] = [
+const COMMUNITY_STORIES = [
   { author: "Jane D.", message: "Campfire introduced me to amazing indie artists I would have never found!" },
-  { author: "Sam G.",  message: "I love how Campfire shows exactly where my money goes. Transparency is key!" },
-  { author: "Mike R.", message: "The Hans Larson Trio's 'Spain' remake blew me away! So glad I found them on Campfire." }
+  { author: "Sam G.",  message: "I love how Campfire shows exactly where my money goes. Transparency is key!" }
 ];
 
 // Initial user profile
@@ -83,11 +82,11 @@ export function getIsInitialized(): boolean {
 function getArtistImageExtension(name: string): string {
   const extensionMap: { [key: string]: string } = {
     'SYM1': '.png',
-    'Hans Larson Trio': '.jpeg',
-    'Patrick Amunson': '.jpeg',
-    'Sadie Habas': '.jpg',
     'MadFrances': '.jpg',
-    'Kiyan Saifi': '.jpg'
+    'Kiyan Saifi': '.jpg',
+    'Sadie Habas': '.jpg',
+    'Patrick Amunson': '.jpeg',
+    'Hans Larson Trio': '.jpeg'
   };
   return extensionMap[name] || '.jpg';  // Default to .jpg if not specified
 }
@@ -107,7 +106,12 @@ function encodeAssetPath(path: string): string {
   // Do not touch absolute URLs
   if (path.startsWith('http')) return path;
 
-  // Split on '/' so we preserve the directory structure, then URI-encode each segment (other than the initial empty string for leading '/')
+  // For image URLs, we don't encode the filename since files are stored with spaces in the public directory
+  if (path.includes('/assets/artists/')) {
+    return path;
+  }
+
+  // For other paths, encode each segment
   return path
     .split('/')
     .map((segment, idx) => (idx === 0 ? segment : encodeURIComponent(segment)))
@@ -160,7 +164,6 @@ export function getFeaturedTracks(): Promise<Track[]> {
           "Right 1 4 Me",
           "Too Greedy",
           "Tell me",
-          "Touch Earth Touch Sky",
           "Escape the City at Night"
         ];
 
@@ -191,7 +194,6 @@ export function getFeaturedTracksSync(): Track[] {
     "Right 1 4 Me",
     "Too Greedy",
     "Tell me",
-    "Touch Earth Touch Sky",
     "Escape the City at Night"
   ];
 
@@ -218,13 +220,23 @@ export async function getAllArtists(): Promise<Artist[]> {
   
   // Transform raw JSON (snake_case keys) to the Artist interface expected by the app
   artistsCache = (artistsData as any[]).map((a: any) => {
-    const folderName = getArtistFolderName(a.name);
-    const rawImagePath = a.image_url || `/assets/artists/${folderName}${getArtistImageExtension(a.name)}`;
+    // Get the base image URL from the JSON data
+    let imageUrl = a.image_url || a.imageUrl;
+    
+    // If no image URL is provided, construct it from the name
+    if (!imageUrl) {
+      const extension = getArtistImageExtension(a.name);
+      const folderName = getArtistFolderName(a.name);
+      imageUrl = `/assets/artists/${folderName}${extension}`;
+    }
+    
+    const finalImageUrl = encodeAssetPath(imageUrl);
+    
     return {
       id: a.id,
       name: a.name,
       bio: a.bio,
-      imageUrl: encodeAssetPath(rawImagePath),
+      imageUrl: finalImageUrl,
       links: a.instagram ? [{ label: "Instagram", url: `https://www.instagram.com/${a.instagram}` }] : []
     };
   });
@@ -261,7 +273,7 @@ export function getPlatformStats(): { label: string, value: number }[] {
 }
 
 export function getCommunityStories(): CommunityStory[] {
-  return communityStories;
+  return COMMUNITY_STORIES;
 }
 
 export function getUserRoyaltyReport(): RoyaltyReport {
@@ -274,8 +286,7 @@ export function getUserRoyaltyReport(): RoyaltyReport {
       ["Patrick Amunson", 2.60],
       ["Kiyan Saifi", 2.15],
       ["MadFrances", 2.00],
-      ["Sadie Habas", 1.30],
-      ["Hans Larson Trio", 0.50]
+      ["Sadie Habas", 1.80]
     ]
   };
 }

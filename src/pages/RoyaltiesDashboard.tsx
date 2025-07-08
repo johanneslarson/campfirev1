@@ -69,7 +69,7 @@ function RoyaltiesDashboard() {
           At Campfire, we believe in fair compensation for artists. When you subscribe, your monthly fee is distributed directly to the artists you listen to, based on your listening time.
         </p>
         <p className="text-gray-300">
-          We take a small platform fee (10%) to keep our servers running, but the rest goes directly to the creators. This means the more you listen to an artist, the more they earn from your subscription.
+          We take a small platform fee (20%) to keep our servers running, but the rest goes directly to the creators. This means the more you listen to an artist, the more they earn from your subscription.
         </p>
       </div>
     </div>
