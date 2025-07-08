@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "build",
   "routes": [
     {
       "src": "/api/artists",
@@ -29,5 +31,10 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
-  ]
+  ],
+  "functions": {
+    "api/*.ts": {
+      "runtime": "@vercel/node@2"
+    }
+  }
 } 
