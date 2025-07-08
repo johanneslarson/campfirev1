@@ -4,32 +4,12 @@
   "outputDirectory": "build",
   "routes": [
     {
-      "src": "/api/artists",
-      "dest": "/api/artists.ts"
-    },
-    {
-      "src": "/api/artists/(.*)",
-      "dest": "/api/artists.ts"
-    },
-    {
-      "src": "/api/tracks",
-      "dest": "/api/tracks.ts"
-    },
-    {
-      "src": "/api/tracks/(.*)",
-      "dest": "/api/tracks.ts"
-    },
-    {
-      "src": "/api/communities",
-      "dest": "/api/communities.ts"
-    },
-    {
       "src": "/static/(.*)",
       "dest": "/static/$1"
     },
     {
       "src": "/assets/(.*)",
-      "dest": "/public/assets/$1"
+      "dest": "/assets/$1"
     },
     {
       "src": "/manifest.json",

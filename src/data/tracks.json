@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "title": "Live at Rhizome",
+    "artist_name": "Kiyan Saifi",
+    "url": "/assets/tracks/kiyan-saifi/live-at-rhizome.m4a"
+  },
+  {
+    "id": "2",
+    "title": "Right 1 4 Me",
+    "artist_name": "MadFrances",
+    "url": "/assets/tracks/madfrances/right-1-4-me.mp3"
+  },
+  {
+    "id": "3",
+    "title": "Too Greedy",
+    "artist_name": "SYM1",
+    "url": "/assets/tracks/sym1/too-greedy.mp3"
+  },
+  {
+    "id": "4",
+    "title": "Tell me",
+    "artist_name": "SYM1",
+    "url": "/assets/tracks/sym1/tell-me.mp3"
+  },
+  {
+    "id": "5",
+    "title": "Escape the City at Night",
+    "artist_name": "Patrick Amunson",
+    "url": "/assets/tracks/patrick-amunson/escape-the-city-at-night.mp3"
+  }
+] 
