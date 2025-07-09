@@ -25,7 +25,7 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
       )}
 
       {/* Mobile Header Bar - Fixed at top */}
-      <div className="fixed top-0 left-0 right-0 flex justify-between items-center p-4 bg-dark-lighter text-white md:hidden z-30">
+      <div className="fixed top-0 left-0 right-0 flex justify-between items-center p-4 bg-dark-lighter text-white md:hidden z-30 border-b border-dark">
         {/* Logo/Brand */}
         <div className="flex items-center">
           <img src="/assets/logo.png" alt="Campfire Logo" className="h-9 w-9 mr-2" />
@@ -45,8 +45,11 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
       {/* Sidebar - Higher z-index than header */}
       <div 
         className={`fixed inset-y-0 left-0 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} w-64 bg-dark-lighter text-white transition-transform duration-300 ease-in-out z-50 md:hidden overflow-y-auto`}
-        style={{ paddingTop: '4rem' }} // Add space for the fixed header
       >
+        <div className="p-4 flex items-center border-b border-dark">
+            <img src="/assets/logo.png" alt="Campfire Logo" className="h-9 w-9 mr-2" />
+            <span className="text-2xl font-bold text-accent">Campfire</span>
+        </div>
         <nav>
           <ul className="space-y-2 px-4 py-2">
             <li>
@@ -75,6 +78,18 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
             </li>
             <li>
               <Link
+                to="/map"
+                className={`flex items-center px-4 py-2 text-sm font-medium rounded-md ${
+                  location.pathname === '/map' ? 'bg-dark text-white' : 'text-accent hover:text-white'
+                }`}
+                onClick={closeMenu}
+              >
+                <FaIcons.FaMap className="h-5 w-5 mr-3" />
+                <span>Music Map</span>
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/communities"
                 className={`flex items-center px-4 py-2 text-sm font-medium rounded-md ${
                   location.pathname.startsWith('/communities') ? 'bg-dark text-white' : 'text-accent hover:text-white'
@@ -87,9 +102,9 @@ function MobileSidebar({ isOpen, toggleMenu, closeMenu }: MobileSidebarProps) {
             </li>
             <li>
               <Link
-                to="/royalties"
+                to="/dashboard"
                 className={`flex items-center px-4 py-2 text-sm font-medium rounded-md ${
-                  location.pathname === '/royalties' ? 'bg-dark text-white' : 'text-accent hover:text-white'
+                  location.pathname === '/dashboard' ? 'bg-dark text-white' : 'text-accent hover:text-white'
                 }`}
                 onClick={closeMenu}
               >

@@ -256,7 +256,7 @@ const MusicMap: React.FC = () => {
           {isMobile ? (
             <ZoomableGroup 
               zoom={1.0} 
-              center={[-82, 40]} 
+              center={[-98, 39]} 
               minZoom={1} 
               maxZoom={4}
               translateExtent={[[-100, -100], [800, 500]]}

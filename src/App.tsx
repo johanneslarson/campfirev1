@@ -57,7 +57,8 @@ function App() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-dark pb-28">
+
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-dark pt-16 md:pt-0 pb-28">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/artists" element={<Artists />} />
@@ -70,7 +71,6 @@ function App() {
           </Routes>
         </main>
 
-        {/* Player */}
         <Player />
       </div>
     </div>
