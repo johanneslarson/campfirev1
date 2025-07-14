@@ -163,6 +163,7 @@ export function getFeaturedTracks(): Promise<Track[]> {
           "Live at Rhizome",
           "Right 1 4 Me",
           "Too Greedy",
+          "4 Amanda Lilly",
           "Tell me",
           "Escape the City at Night"
         ];
@@ -193,6 +194,7 @@ export function getFeaturedTracksSync(): Track[] {
     "Live at Rhizome",
     "Right 1 4 Me",
     "Too Greedy",
+    "4 Amanda Lilly",
     "Tell me",
     "Escape the City at Night"
   ];
